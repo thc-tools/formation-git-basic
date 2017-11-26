@@ -61,6 +61,36 @@
         }
     </style>
 
+    <script>
+        var baseTemplate = new GitGraph.Template().get('metro');
+        template = {
+            colors: baseTemplate.colors,
+            showLabel: true,
+            branch: {
+                lineWidth: 7,
+                spacingX: 50,
+                showLabel: false,                  // display branch names on graph
+            },
+            commit: {
+                spacingY: -40,
+                dot: {
+                    size: 10
+                },
+                message: {
+                    displayAuthor: true,
+                    displayBranch: true,
+                    displayHash: true,
+                    font: baseTemplate.commit.message.font
+                },
+                shouldDisplayTooltipsInCompactMode: true, // default = true
+                tooltipHTMLFormatter: function (commit) {
+                    return "" + commit.sha1 + "" + ": " + commit.message;
+                }
+            }
+        };
+
+    </script>
+
     <!--[if lt IE 9]>
     <script src="lib/js/html5shiv.js"></script>
     <![endif]-->
@@ -164,10 +194,38 @@
                         <li>Lien vers le ou les commits parents</li>
                     </ul>
                 </section>
+                <section>
+                    <h1>Exemple</h1>
+                    <canvas id="concept-historique" style="background: white"></canvas>
+                    <script>
+
+
+                        var gitGraph = new GitGraph({ template, orientation: "vertical-reverse", author: "Thibault Ingargiola", elementId: "concept-historique", message:"message exemple"  });
+
+                        var master = gitGraph.branch("master").commit("First commit").commit("Update README.txt");
+                        var dev = gitGraph.branch("dev").commit().commit();
+                        var feat1 = dev.branch("feature1").commit();
+                        var feat2 = dev.branch("feature2").commit({message:"lala",onClick:function (commit) {alert("lala")}});
+                        feat1.merge(dev);
+                        master.commit();
+                        dev.commit();
+                        feat2.merge(dev);
+
+
+                        gitGraph.canvas.addEventListener( "commit:mouseover", function ( event ) {
+  console.log( "You're over a commit.", event.data );
+  this.style.cursor = "pointer";
+} );
+
+gitGraph.canvas.addEventListener("commit:mouseout", function (event) {
+  console.log( "You just left this commit ->", event.data );
+  this.style.cursor = "auto";
+});
+                    </script>
+                </section>
             </section>
 
-            <section style="font-size: 22px; color:white" data-transition="slide" data-background="#7BAFC6" data-background-transition="zoom"
-                style="color:black;">
+            <section style="font-size: 22px;" data-transition="slide" data-background="#C67B9E" data-background-transition="zoom">
                 <section>
                     <h1>Créer un dépôt Git</h1>
                 </section>
@@ -180,6 +238,14 @@
                 <section>
                     <h1>Git config</h1>
                 </section>
+            </section>
+
+            <section style="font-size: 22px; color:white" data-transition="slide" data-background-transition="zoom">
+                <section>
+                    <h1>Gestion des modifications</h1>
+                </section>
+            </section>
+            <section style="font-size: 22px; color:white" data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
             </section>
         </div>
     </div>
