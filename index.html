@@ -59,33 +59,40 @@
         table tr td code {
             color: white;
         }
+
+        pre code {
+            font-size: 14px !important;
+        }
     </style>
 
     <script>
-        var baseTemplate = new GitGraph.Template().get('metro');
-        template = {
-            colors: baseTemplate.colors,
-            showLabel: true,
-            branch: {
-                lineWidth: 7,
-                spacingX: 50,
-                showLabel: false,                  // display branch names on graph
-            },
-            commit: {
-                spacingY: -40,
-                dot: {
-                    size: 10
+
+        function getDefautTemplate() {
+            var baseTemplate = new GitGraph.Template().get('metro');
+            return template = {
+                colors: baseTemplate.colors,
+                showLabel: true,
+                branch: {
+                    lineWidth: 7,
+                    spacingX: 50,
+                    showLabel: false,                  // display branch names on graph
                 },
-                message: {
-                    defaultMessage: "message exemple",
-                    displayAuthor: true,
-                    displayBranch: true,
-                    displayHash: true,
-                    font: baseTemplate.commit.message.font
-                },
-                shouldDisplayTooltipsInCompactMode: true, // default = true
-                tooltipHTMLFormatter: function (commit) {
-                    return "" + commit.sha1 + "" + ": " + commit.message;
+                commit: {
+                    spacingY: -40,
+                    dot: {
+                        size: 10
+                    },
+                    message: {
+                        defaultMessage: "message exemple",
+                        displayAuthor: true,
+                        displayBranch: true,
+                        displayHash: true,
+                        font: baseTemplate.commit.message.font
+                    },
+                    shouldDisplayTooltipsInCompactMode: true, // default = true
+                    tooltipHTMLFormatter: function (commit) {
+                        return "" + commit.sha1 + "" + ": " + commit.message;
+                    }
                 }
             }
         };
@@ -204,44 +211,105 @@
                     <canvas id="concept-historique" style="background: white"></canvas>
                     <script>
 
-
+                        var template = getDefautTemplate();
                         var gitGraph = new GitGraph({ template, orientation: "vertical-reverse", author: "Thibault Ingargiola", elementId: "concept-historique", message: "message exemple" });
 
                         var master = gitGraph.branch("master").commit("First commit").commit("Update README.txt");
                         var dev = gitGraph.branch("dev").commit().commit();
                         var feat1 = dev.branch("feature1").commit();
-                        var feat2 = dev.branch("feature2").commit({ message: "lala", onClick: function (commit) { alert("lala") } });
+                        var feat2 = dev.branch("feature2").commit({ message: "lala" });
                         feat1.merge(dev);
                         master.commit();
                         dev.commit();
                         feat2.merge(dev);
-
-
-                        gitGraph.canvas.addEventListener("commit:mouseover", function (event) {
-                            console.log("You're over a commit.", event.data);
-                            this.style.cursor = "pointer";
-                        });
-
-                        gitGraph.canvas.addEventListener("commit:mouseout", function (event) {
-                            console.log("You just left this commit ->", event.data);
-                            this.style.cursor = "auto";
-                        });
                     </script>
                 </section>
             </section>
 
-            <section style="font-size: 22px;" data-transition="slide" data-background="#C67B9E" data-background-transition="zoom">
+            <section style="font-size: 22px; color:white;" data-transition="slide" data-background="#C67B9E" data-background-transition="zoom">
                 <section>
                     <h1>Créer un dépôt Git</h1>
                 </section>
                 <section>
                     <h1>Git Init</h1>
+                    <pre><code class="bash">git init</code></pre>
+                    <p>Transforme le dossier courant en dépôt git.</p>
+                    <pre><code class="bash">git init __directory__ </code></pre>
+                    <p>Transforme le dossier __directory__ en dépôt git.</p>
+                    <pre><code class="bash">git init [--bare]</code></pre>
+                    <p>Un repository
+                        <i>bare</i> est un repository dans lequel on ne peut rien commiter directement. On ne peut que synchroniser
+                        avec d'autre dépôt. </p>
+                    <blockquote style="align-self: left; text-align: left">
+                        Note: Si vous fait un git init dans un repertoire étant déjà un depôt git. Rien ne se passe. Vous n'écraserez pas votre configuration.
+                    </blockquote>
                 </section>
                 <section>
                     <h1>Git clone</h1>
+                    <pre><code class="bash">git clone __url__</code></pre>
+                    <p>Cette commande vous permez de cloner un dépôt existant (distant ou non). Un dossier portant le nom du
+                        projet est créé dans le répertoire courant, et le dépôt est copié dans ce dossier.</p>
+                    <pre><code class="bash">git clone https://github.com/Tsj-/formation-git.git</code></pre>
+                    <p>Par exemple si vous voulez contribuer à l'amélioration de cette formation, vous pouvez copier le dépôt
+                        et commencer à coder =)</p>
                 </section>
                 <section>
                     <h1>Git config</h1>
+                    <pre><code class="bash">git config --global user.name "Thibault Ingargiola"</code></pre>
+                    <pre><code class="bash">git config user.email "thibault.i@email.com"</code></pre>
+                    <pre><code class="bash">git config --global http.proxy "http://172.20.0.9"</code></pre>
+                    <p>Permet de régler les configurations du compte git. Il est possible de gérer une hierarchie des configuration:</p>
+                    <ul>
+                        <li>system</li>
+                        <li>global</li>
+                        <li>local</li>
+                    </ul>
+                </section>
+                <section>
+                    <h1>Les alias</h1>
+                    <p>Il est possible de se créer des alias pour simplifier l'utilisation de certaines commandes complexes</p>
+                    <pre><code class="bash">git config --global alias.ci commit</code></pre>
+                    <pre><code class="bash">git config --global alias.amend git ci --amend</code></pre>
+                    <p style="text-align: left">Ainsi la commande</p>
+                    <pre><code class="bash">git amend</code></pre>
+                    <p style="text-align: left">devient equivalente à:</p>
+                    <pre><code class="bash">git commit --amend</code></pre>
+                    </ul>
+                </section>
+                <section>
+                    <pre><code class="bash">git config --list
+                        core.symlinks=false
+                        core.autocrlf=true
+                        core.fscache=true
+                        color.diff=auto
+                        color.status=auto
+                        color.branch=auto
+                        color.interactive=true
+                        help.format=html
+                        http.sslcainfo=C:/Program Files/Git/mingw64/ssl/certs/ca-bundle.crt
+                        diff.astextplain.textconv=astextplain
+                        rebase.autosquash=true
+                        filter.lfs.clean=git-lfs clean -- %f
+                        filter.lfs.smudge=git-lfs smudge -- %f
+                        filter.lfs.required=true
+                        filter.lfs.process=git-lfs filter-process
+                        credential.helper=manager
+                        user.name=Thibault Ingargiola
+                        user.email=thibaultingargiola@gmail.com
+                        alias.cb=checkout
+                        credential.helper=wincred
+                        url.https://.insteadof=git://
+                        core.bare=false
+                        core.repositoryformatversion=0
+                        core.filemode=false
+                        core.symlinks=false
+                        core.ignorecase=true
+                        core.logallrefupdates=true
+                        remote.origin.url=https://github.com/Tsj-/formation-git.git
+                        remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
+                        branch.master.remote=origin
+                        branch.master.merge=refs/heads/master
+                        </code></pre>
                 </section>
             </section>
 
@@ -251,17 +319,55 @@
                 </section>
                 <section>
                     <h1>Git add</h1>
+                    <p>Cette fonction sert à passer des nouveaux fichiers, ou des fichiers modifiés à l'état
+                        <i>staged</i> afin qu'ils puissent par la suite être commités.</p>
+                    <pre><code class="bash">git add __file__</code></pre>
+                    <pre><code class="bash">git add __directory__</code></pre>
+                    <pre><code class="bash">git add ./src/*.js</code></pre>
+                    <blockquote>
+                        <p>La phase de stagging est une particularité propre à Git. Ce buffer entre la phase de travail, et
+                            la phase d'historisation permet de morceler notre historique afin de rendre les commits les plus
+                            atomiques possible.</p>
+                    </blockquote>
                 </section>
                 <section>
                     <h1>Git commit</h1>
+                    <p>Cette commande sauvegarde l'ensemble des modifications dans l'état
+                        <i>staged</i> etl'ajoute à l'historique du projet.</p>
+                    <pre><code class="bash">git commit -m "__message_de_commit__"</code></pre>
+                    <p>Une fois nos modifications commitées, Git ne les oubliera jamais. Il est bien sur possible de modifier
+                        l'historique, mais là encore il existe des possibilité pour retrouver nos modifications.</p>
+                    <blockquote>
+                        <p>Attention! Ceci n'a rien à voir avec la fonction commit de SVN. Ici l'historisation n'est faite que
+                            sur votre depôt local. La synchronisation avec un serveur central ce fait séparément.</p>
+                    </blockquote>
                 </section>
-                <section>
-                    <h1>Git commit --amend</h1>
-                </section>
+
             </section>
             <section style="font-size: 22px; color:white" data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
                 <section>
                     <h1>Revenir en arrière</h1>
+                </section>
+                <section>
+                    <h1>Git commit --amend</h1>
+                    <pre><code class="bash">git commit --amend</code></pre>
+                    <p>Apporte les nouvelle modifications à l'ancien commit.</p>
+
+                    <div>
+                        <canvas id="before-amend" style="background: white"></canvas>
+                        <pre><code class="bash">git commit --amend -m "Update README.txt"</code></pre>
+                        <canvas id="after-amend" style="background: white"></canvas>
+
+                        <blockquote>Attention: on modifie l'historique en faisant cela. Le --amend n'est utilisé que lorsque les modification ne sont pas synchronisée avec le serveur.</blockquote>
+                    </div>
+                    <script>
+                        var template = getDefautTemplate();
+                        template.commit.message.displayBranch = false;
+                        var gitGraphBefore = new GitGraph({ template, orientation: "vertical-reverse", author: "Thibault Ingargiola", elementId: "before-amend" });
+                        var gitGraphAfter = new GitGraph({ template, orientation: "vertical-reverse", author: "Thibault Ingargiola", elementId: "after-amend" });
+                        var master = gitGraphBefore.branch("master").commit({ message: "First commit", sha1: "6b2488" }).commit({ message: "Update README.text", sha1: "42eb2a" });
+                        var master = gitGraphAfter.branch("master").commit({ message: "First commit", sha1: "6b2488" }).commit({ message: "Update README.txt", sha1: "aebf67", dotColor: "red", messageColor: "red" });
+                    </script>
                 </section>
                 <section>
                     <h1>Git reset</h1>
@@ -271,46 +377,46 @@
                 </section>
             </section>
             <section style="font-size: 22px; color:white" data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
-                    <section>
-                        <h1>Les Branches</h1>
-                    </section>
-                    <section>
-                        <h1>Git branch</h1>
-                    </section>
-                    <section>
-                        <h1>Git checkout</h1>
-                    </section>
-                    <section>
-                            <h1>Git stash</h1>
-                    </section>
+                <section>
+                    <h1>Les Branches</h1>
+                </section>
+                <section>
+                    <h1>Git branch</h1>
+                </section>
+                <section>
+                    <h1>Git checkout</h1>
+                </section>
+                <section>
+                    <h1>Git stash</h1>
+                </section>
             </section>
 
             <section style="font-size: 22px; color:white" data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
-                    <section>
-                        <h1>Synchronisation</h1>
-                        <h3>Branche et remote</h3>
-                    </section>
-                    <section>
-                        <h1>Git fetch</h1>
-                    </section>
-                    <section>
-                        <h1>Git merge</h1>
-                    </section>
-                    <section>
-                        <h1>Git pull</h1>
-                    </section>
-                    <section>
-                        <h1>Git push</h1>
-                    </section>
-                    <section>
-                        <h1>Git rebase</h1>
-                    </section>
+                <section>
+                    <h1>Synchronisation</h1>
+                    <h3>Branche et remote</h3>
+                </section>
+                <section>
+                    <h1>Git fetch</h1>
+                </section>
+                <section>
+                    <h1>Git merge</h1>
+                </section>
+                <section>
+                    <h1>Git pull</h1>
+                </section>
+                <section>
+                    <h1>Git push</h1>
+                </section>
+                <section>
+                    <h1>Git rebase</h1>
+                </section>
             </section>
 
             <section style="font-size: 22px; color:white" data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
-                    <section>
-                        <h1>Les conflits</h1>
-                    </section>
+                <section>
+                    <h1>Les conflits</h1>
+                </section>
             </section>
         </div>
     </div>
