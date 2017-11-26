@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Git - Les bases</title>
+
+    <meta name="description" content="Formation destinée aux développeur pour une utilisation basique de Git">
+    <meta name="author" content="Thibault INGARGIOLA">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/moon.css" id="theme">
+
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- MD icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="css/gitgraph.css" />
+    <script src="js/gitgraph.js"></script>
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+
+    <style>
+        .inline {
+            display: flex;
+        }
+
+        .inline>div {
+            flex: 1;
+        }
+
+        .semantic-sample {
+            font-size: 18px !important;
+        }
+
+        .semantic-sample strong,
+        .semantic-sample b,
+        .semantic-sample em,
+        .semantic-sample i,
+        .semantic-sample u {
+            color: #78BAE6;
+        }
+
+        table tr td code {
+            color: white;
+        }
+    </style>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+    <div class="reveal">
+
+        <!-- Any section element inside of this container is displayed as a slide -->
+        <div class="slides">
+            <section>
+                <section data-markdown>
+                    # Git
+                    ### Les bases de la gestion de version
+                </section>
+                <section data-markdown>
+                    # Sommaire * Les concepts de Git * Les fonctions de bases * Travailler concrètement avec Git * Pour aller plus loin
+                </section>
+            </section>
+
+            <section>
+                <section>
+                    <h1>Kesako?</h1>
+                    <div style="display:flex; align-items:center; justify-content: space-around;">
+                        <div>
+                            <p class="semantic-sample" style="text-align: left;">
+                                Git a été créé par Linus Torvald (créateur de Linux) en avril 2005 pour proposer une alternative gratuite à BitKeeper.
+                            </p>
+                            <p class="semantic-sample" style="text-align: left;">
+                                C’est un gestionnaire de version décentralisé. Cette gestion décentralisé lui a valu son succès, notamment auprès de la communauté
+                                du logiciel libre.
+                            </p>
+                            <p class="semantic-sample" style="text-align: left;">
+                                Git a été pensé comme un système de fichier à part entière qui gère lui-même le versionnement de son arborescence (d’après
+                                Linus Torvald).
+                            </p>
+                        </div>
+
+                        <img src="./images/linus-torvald.jpg" style="height:300px;" />
+                    </div>
+                </section>
+                <section>
+                    <h1>Décentralisé</h1>
+                    <img src="./images/decentralise.png" style="height:300px;" />
+                    <div>
+                        <p class="semantic-sample" style="text-align: left;">
+                            Git est un gestionnaire de version décentralisé. Chaque à contributeur possède donc localement un dépôt à part entière!
+                        </p>
+                        <p class="semantic-sample" style="text-align: left;">
+                            Chaque dépôt est totalement indépendant des autres. Les synchronisations entre dépôts sont à décider suivant vos méthodes
+                            de travail.
+                        </p>
+                    </div>
+                </section>
+            </section>
+
+            <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom" style="color:white; font-size:24px;">
+                <section>
+                    <h1>La gestion de fichiers</h1>
+                    <p>Git indexe les fichiers d'après leur somme de contrôle calculée avec la fonction de hachage SHA-1. Quand
+                        un fichier n'est pas modifié, la somme de contrôle ne change pas et le fichier n'est stocké qu'une
+                        seule fois. En revanche, si le fichier est modifié, les deux versions sont stockées sur le disque.</p>
+                </section>
+                <section>
+                    <img src="./images/file-states.png" style="background-color: white;" />
+                    <blockquote style="width:100%; ">
+                        <ul>
+                            <li>Untracked: Le fichiers n’est pas indexé, et n’est pas considéré pour le calcul des différences
+                                entre deux révisions
+                            </li>
+                            <li>Stagged: Le fichier fait parti d’un lot prêt à être commité
+                            </li>
+                            <li>Unmodified: Le fichier est indexé, mais ne possède aucune différence avec sa version de la révision
+                                précédente
+                            </li>
+                            <li>Modified: Le fichier est indexé, et possède des différences avec sa version dans la révision
+                                précédente
+                            </li>
+                        </ul>
+                    </blockquote>
+                </section>
+            </section>
+            <section style="font-size: 22px; color:white" data-transition="slide" data-background="#7BAFC6" data-background-transition="zoom"
+                style="color:black;">
+                <section>
+                    <h1>L'historique</h1>
+                    <p>L'historique de git est créé comme une chaine de pointeur entre les différentes révisions du projet</p>
+                </section>
+                <section>
+                    <h1>Le Commit</h1>
+                    <p style="text-align: left; color:white;">
+                        Un commit est une révision du projet. Le snapshot du projet à l’instant T où le commit a été créé. Il est identifié par son
+                        SHA-1 et contient les informations suivante:
+                    </p>
+                    <ul>
+                        <li>Auteur</li>
+                        <li>Date du commit</li>
+                        <li>Message de commit</li>
+                        <li>Contenu arborescent de la révision</li>
+                        <li>Lien vers le ou les commits parents</li>
+                    </ul>
+                </section>
+            </section>
+
+            <section style="font-size: 22px; color:white" data-transition="slide" data-background="#7BAFC6" data-background-transition="zoom"
+                style="color:black;">
+                <section>
+                    <h1>Créer un dépôt Git</h1>
+                </section>
+                <section>
+                    <h1>Git Init</h1>
+                </section>
+                <section>
+                    <h1>Git clone</h1>
+                </section>
+                <section>
+                    <h1>Git config</h1>
+                </section>
+            </section>
+        </div>
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+
+    <script>
+
+        // Full list of configuration options available at:
+        // https://github.com/hakimel/reveal.js#configuration
+        Reveal.initialize({
+            controls: true,
+            progress: true,
+            history: true,
+            center: true,
+
+            transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+            // Optional reveal.js plugins
+            dependencies: [
+                { src: 'lib/js/classList.js', condition: function () { return !document.body.classList; } },
+                { src: 'plugin/markdown/marked.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+                { src: 'plugin/markdown/markdown.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+                { src: 'plugin/highlight/highlight.js', async: true, condition: function () { return !!document.querySelector('pre code'); }, callback: function () { hljs.initHighlightingOnLoad(); } },
+                { src: 'plugin/zoom-js/zoom.js', async: true },
+                { src: 'plugin/notes/notes.js', async: true }
+            ]
+        });
+
+    </script>
+
+</body>
+
+</html>
