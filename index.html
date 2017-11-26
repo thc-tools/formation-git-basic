@@ -77,6 +77,7 @@
                     size: 10
                 },
                 message: {
+                    defaultMessage: "message exemple",
                     displayAuthor: true,
                     displayBranch: true,
                     displayHash: true,
@@ -108,7 +109,11 @@
                     ### Les bases de la gestion de version
                 </section>
                 <section data-markdown>
-                    # Sommaire * Les concepts de Git * Les fonctions de bases * Travailler concrètement avec Git * Pour aller plus loin
+                    # Sommaire
+                    * Les concepts de Git
+                    * Les fonctions de bases
+                    * Travailler concrètement avec Git
+                    * Pour aller plus loin
                 </section>
             </section>
 
@@ -200,27 +205,27 @@
                     <script>
 
 
-                        var gitGraph = new GitGraph({ template, orientation: "vertical-reverse", author: "Thibault Ingargiola", elementId: "concept-historique", message:"message exemple"  });
+                        var gitGraph = new GitGraph({ template, orientation: "vertical-reverse", author: "Thibault Ingargiola", elementId: "concept-historique", message: "message exemple" });
 
                         var master = gitGraph.branch("master").commit("First commit").commit("Update README.txt");
                         var dev = gitGraph.branch("dev").commit().commit();
                         var feat1 = dev.branch("feature1").commit();
-                        var feat2 = dev.branch("feature2").commit({message:"lala",onClick:function (commit) {alert("lala")}});
+                        var feat2 = dev.branch("feature2").commit({ message: "lala", onClick: function (commit) { alert("lala") } });
                         feat1.merge(dev);
                         master.commit();
                         dev.commit();
                         feat2.merge(dev);
 
 
-                        gitGraph.canvas.addEventListener( "commit:mouseover", function ( event ) {
-  console.log( "You're over a commit.", event.data );
-  this.style.cursor = "pointer";
-} );
+                        gitGraph.canvas.addEventListener("commit:mouseover", function (event) {
+                            console.log("You're over a commit.", event.data);
+                            this.style.cursor = "pointer";
+                        });
 
-gitGraph.canvas.addEventListener("commit:mouseout", function (event) {
-  console.log( "You just left this commit ->", event.data );
-  this.style.cursor = "auto";
-});
+                        gitGraph.canvas.addEventListener("commit:mouseout", function (event) {
+                            console.log("You just left this commit ->", event.data);
+                            this.style.cursor = "auto";
+                        });
                     </script>
                 </section>
             </section>
@@ -242,10 +247,70 @@ gitGraph.canvas.addEventListener("commit:mouseout", function (event) {
 
             <section style="font-size: 22px; color:white" data-transition="slide" data-background-transition="zoom">
                 <section>
-                    <h1>Gestion des modifications</h1>
+                    <h1>Modifier des éléments</h1>
+                </section>
+                <section>
+                    <h1>Git add</h1>
+                </section>
+                <section>
+                    <h1>Git commit</h1>
+                </section>
+                <section>
+                    <h1>Git commit --amend</h1>
                 </section>
             </section>
             <section style="font-size: 22px; color:white" data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+                <section>
+                    <h1>Revenir en arrière</h1>
+                </section>
+                <section>
+                    <h1>Git reset</h1>
+                </section>
+                <section>
+                    <h1>Git revert</h1>
+                </section>
+            </section>
+            <section style="font-size: 22px; color:white" data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+                    <section>
+                        <h1>Les Branches</h1>
+                    </section>
+                    <section>
+                        <h1>Git branch</h1>
+                    </section>
+                    <section>
+                        <h1>Git checkout</h1>
+                    </section>
+                    <section>
+                            <h1>Git stash</h1>
+                    </section>
+            </section>
+
+            <section style="font-size: 22px; color:white" data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+                    <section>
+                        <h1>Synchronisation</h1>
+                        <h3>Branche et remote</h3>
+                    </section>
+                    <section>
+                        <h1>Git fetch</h1>
+                    </section>
+                    <section>
+                        <h1>Git merge</h1>
+                    </section>
+                    <section>
+                        <h1>Git pull</h1>
+                    </section>
+                    <section>
+                        <h1>Git push</h1>
+                    </section>
+                    <section>
+                        <h1>Git rebase</h1>
+                    </section>
+            </section>
+
+            <section style="font-size: 22px; color:white" data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+                    <section>
+                        <h1>Les conflits</h1>
+                    </section>
             </section>
         </div>
     </div>
