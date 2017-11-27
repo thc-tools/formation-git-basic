@@ -161,24 +161,27 @@
                         </p>
                     </div>
                 </section>
+                <section>
+                        <h1>Décentralisé</h1>
+                        <p class="semantic-sample">De manière générale, on travaille avec un dépôt central qui sert de maitre de la donnée. Ce dépôt est traditionellement appelé <i>origin</i>. Chacun des poste client récupére et synchronise ses sources avec <i>origin</i>.</p>
+                    </section>
             </section>
 
             <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom" style="color:white; font-size:24px;">
                 <section>
                     <h1>La gestion de fichiers</h1>
-                    <p>Git indexe les fichiers d'après leur somme de contrôle calculée avec la fonction de hachage SHA-1. Quand
+                    <p class="semantic-sample">Git indexe les fichiers d'après leur <i>somme de contrôle</i> calculée avec la fonction de hachage <i>SHA-1</i>. Quand
                         un fichier n'est pas modifié, la somme de contrôle ne change pas et le fichier n'est stocké qu'une
                         seule fois. En revanche, si le fichier est modifié, les deux versions sont stockées sur le disque.</p>
                 </section>
                 <section>
                     <img src="./images/file-states.png" style="background-color: white;" />
                     <blockquote style="width:100%; ">
-                        <ul>
+                        <ul class="semantic-sample">
                             <li>Untracked: Le fichiers n’est pas indexé, et n’est pas considéré pour le calcul des différences
                                 entre deux révisions
                             </li>
-                            <li>Stagged: Le fichier fait parti d’un lot prêt à être commité
-                            </li>
+                            <li>Stagged: Le fichier fait parti d’un lot prêt à être commité</li>
                             <li>Unmodified: Le fichier est indexé, mais ne possède aucune différence avec sa version de la révision
                                 précédente
                             </li>
@@ -188,18 +191,29 @@
                         </ul>
                     </blockquote>
                 </section>
+                <section>
+                    <h1>Ignorer des fichiers</h1>
+                    <p class="semantic-sample">Il est possible de faire en sorte que des fichiers présent dans votre répertoire soit <i>ignorés</i> par Git. Il suffit de placer les repertoires/fichiers à ignorer dans le <i>.gitignore</i></p>
+                    <pre><code class="txt">
+lib/
+plugin/
+js/
+css/
+node_modules/
+                        </code></pre>
+                </section>
             </section>
             <section style="font-size: 22px; color:white" data-transition="slide" data-background="#7BAFC6" data-background-transition="zoom"
                 style="color:black;">
                 <section>
                     <h1>L'historique</h1>
-                    <p>L'historique de git est créé comme une chaine de pointeur entre les différentes révisions du projet</p>
+                    <p>L'historique de git est créé comme une chaine de pointeurs entre les différentes révisions (<strong style="color:red">commits</strong>) du projet</p>
                 </section>
                 <section>
                     <h1>Le Commit</h1>
-                    <p style="text-align: left; color:white;">
-                        Un commit est une révision du projet. Le snapshot du projet à l’instant T où le commit a été créé. Il est identifié par son
-                        SHA-1 et contient les informations suivante:
+                    <p class="semantic-sample" style="text-align: left; color:white;">
+                        Un commit est une révision du projet. Le <strong style="color:red">snapshot</strong> du projet à l’instant T où le commit a été créé. Il est identifié par son
+                        <strong style="color:red">SHA-1</strong> et contient les informations suivante:
                     </p>
                     <ul>
                         <li>Auteur</li>
@@ -235,13 +249,11 @@
                 </section>
                 <section>
                     <h1>Git Init</h1>
-                    <pre><code class="bash">git init</code></pre>
-                    <p>Transforme le dossier courant en dépôt git.</p>
-                    <pre><code class="bash">git init __directory__ </code></pre>
-                    <p>Transforme le dossier __directory__ en dépôt git.</p>
+                    <pre><code class="bash">git init</code>Transforme le dossier courant en dépôt git.</pre>
+                    <pre><code class="bash">git init __directory__ </code>Transforme le dossier __directory__ en dépôt git.</pre>
                     <pre><code class="bash">git init [--bare]</code></pre>
-                    <p>Un repository
-                        <i>bare</i> est un repository dans lequel on ne peut rien commiter directement. On ne peut que synchroniser
+                    <p class="semantic-sample">Un repository
+                        <strong>bare</strong> est un repository dans lequel on ne peut rien commiter directement. On ne peut que synchroniser
                         avec d'autre dépôt. </p>
                     <blockquote style="align-self: left; text-align: left">
                         Note: Si vous faites un git init dans un repertoire étant déjà un depôt git. Rien ne se passe. Vous n'écraserez pas votre configuration.
@@ -249,34 +261,31 @@
                 </section>
                 <section>
                     <h1>Git clone</h1>
+                    <p class="semantic-sample">Cette commande vous permez de <strong>cloner un dépôt existant</strong> (distant ou non). Un dossier portant le nom du
+                            projet est créé dans le répertoire courant, et le dépôt est copié dans ce dossier.</p>
                     <pre><code class="bash">git clone __url__</code></pre>
-                    <p>Cette commande vous permez de cloner un dépôt existant (distant ou non). Un dossier portant le nom du
-                        projet est créé dans le répertoire courant, et le dépôt est copié dans ce dossier.</p>
-                    <pre><code class="bash">git clone https://github.com/Tsj-/formation-git.git</code></pre>
-                    <p>Par exemple si vous voulez contribuer à l'amélioration de cette formation, vous pouvez copier le dépôt
-                        et commencer à coder =)</p>
+
+                    <pre><code class="bash">git clone https://github.com/Tsj-/formation-git.git</code>Par exemple si vous voulez contribuer à l'amélioration de cette formation, vous pouvez copier le dépôtet commencer à coder =)</pre>
                 </section>
                 <section>
                     <h1>Git config</h1>
-                    <pre><code class="bash">git config --global user.name "Thibault Ingargiola"</code></pre>
-                    <pre><code class="bash">git config user.email "thibault.i@email.com"</code></pre>
-                    <pre><code class="bash">git config --global http.proxy "http://172.20.0.9"</code></pre>
                     <p>Permet de régler les configurations du compte git. Il est possible de gérer une hierarchie des configuration:</p>
                     <ul>
                         <li>system</li>
                         <li>global</li>
                         <li>local</li>
                     </ul>
+                    <pre><code class="bash">git config --global user.name "Thibault Ingargiola"</code></pre>
+                    <pre><code class="bash">git config user.email "thibault.i@email.com"</code></pre>
+                    <pre><code class="bash">git config --global http.proxy "http://172.20.0.9"</code></pre>
                 </section>
                 <section>
                     <h1>Les alias</h1>
                     <p>Il est possible de se créer des alias pour simplifier l'utilisation de certaines commandes complexes</p>
                     <pre><code class="bash">git config --global alias.ci commit</code></pre>
                     <pre><code class="bash">git config --global alias.amend git ci --amend</code></pre>
-                    <p style="text-align: left">Ainsi la commande</p>
-                    <pre><code class="bash">git amend</code></pre>
-                    <p style="text-align: left">devient equivalente à:</p>
-                    <pre><code class="bash">git commit --amend</code></pre>
+                    <pre>Ainsi la commande<code class="bash">git amend</code></pre>
+                    <pre>devient equivalente à:<code class="bash">git commit --amend</code></pre>
                     </ul>
                 </section>
                 <section>
@@ -322,8 +331,8 @@
                 </section>
                 <section>
                     <h1>Git add</h1>
-                    <p>Cette fonction sert à passer des nouveaux fichiers, ou des fichiers modifiés à l'état
-                        <i>staged</i> afin qu'ils puissent par la suite être commités.</p>
+                    <p class="semantic-sample">Cette fonction sert à passer <i>des nouveaux fichiers, ou des fichiers modifiés</i> à l'état
+                        <i>staged</i> afin qu'ils puissent <i>par la suite être commités</i>.</p>
                     <pre><code class="bash">git add __file__</code></pre>
                     <pre><code class="bash">git add __directory__</code></pre>
                     <pre><code class="bash">git add ./src/*.js</code></pre>
@@ -335,10 +344,10 @@
                 </section>
                 <section>
                     <h1>Git commit</h1>
-                    <p>Cette commande sauvegarde l'ensemble des modifications dans l'état
+                    <p class="semantic-sample">Cette commande <i>sauvegarde l'ensemble des modifications</i> dans l'état
                         <i>staged</i> etl'ajoute à l'historique du projet.</p>
                     <pre><code class="bash">git commit -m "__message_de_commit__"</code></pre>
-                    <p>Une fois nos modifications commitées, Git ne les oubliera jamais. Il est bien sur possible de modifier
+                    <p class="semantic-sample">Une fois nos modifications commitées, <i>Git ne les oubliera jamais</i>. Il est bien sur possible de modifier
                         l'historique, mais là encore il existe des possibilité pour retrouver nos modifications.</p>
                     <blockquote>
                         <p>Attention! Ceci n'a rien à voir avec la fonction commit de SVN. Ici l'historisation n'est faite que
@@ -353,12 +362,10 @@
                 </section>
                 <section>
                     <h1>Git commit --amend</h1>
-                    <pre><code class="bash">git commit --amend</code></pre>
-                    <p>Apporte les nouvelle modifications à l'ancien commit.</p>
-
+                    <pre><code class="bash">git commit --amend</code>Apporte les nouvelle modifications à l'ancien commit.</pre>
                     <div>
                         <canvas id="before-amend" style="background: white"></canvas>
-                        <pre><code class="bash">git commit --amend -m "Update README.txt"</code></pre>
+                        <pre><code class="bash">git commit --amend -m "Update README.txt"</code>Applique les modification à l'ancien commit, et change le message de commit en <i>"Update README.txt"</i>.</pre>
                         <canvas id="after-amend" style="background: white"></canvas>
 
                         <blockquote>Attention: on modifie l'historique en faisant cela. Le --amend n'est utilisé que lorsque les modification ne sont pas synchronisée avec le serveur.</blockquote>
@@ -374,15 +381,14 @@
                 </section>
                 <section>
                     <h1>Git reset</h1>
-                    <p>Vous permez de revenir à l'état de n'importe quel commit.</p>
-                    <pre><code class="bash">git reset HEAD^</code></pre>
-                    <p>Revient au commit précédent. En gardant l'ensemble des modifications dans l'état <i>modified</i></p>
-                    <pre><code class="bash">git reset HEAD~3 --hard</code></pre>
-                    <p>Revient trois commit en arrière en effaçant l'ensemble des modifications.</p>
+                    <p class="semantic-sample">Vous permez de <i>revenir à l'état de n'importe quel commit</i>. <i>Efface les liens</i> des commits concernés.</p>
+                    <pre><code class="bash">git reset HEAD^</code>Revient au commit précédent. En gardant l'ensemble des modifications dans l'état <i>modified</i></pre>
+                    <pre><code class="bash">git reset HEAD~3 --hard</code>Revient trois commit en arrière en effaçant l'ensemble des modifications.</pre>
+                    <pre><code class="bash">git reset origin/master --hard</code>Revient à l'état dans lequel est la branch sur le dépôt origin.</pre>
                 </section>
                 <section>
                         <h1>Le HEAD</h1>
-                        <p>Il s'agit de votre emplacement actuel dans votre arbre d'historique</p>
+                        <p class="semantic-sample">Il s'agit de <i>votre emplacement</i> actuel dans <i>l'arbre d'historique</i></p>
                         <div>
                             <canvas id="head" style="background: white"></canvas>
                         </div>
@@ -398,17 +404,17 @@
             <section style="font-size: 22px; color:white" data-transition="slide" data-background="#C67B9E" data-background-transition="zoom">
                 <section>
                     <h1>Les Branches</h1>
-                    <p>Il s'agit de la grande puissance de Git! Rendre les branches plus facile d'utilisation pour s'adapter à n'importe quelle méthode de travail.</p>
+                    <p class="semantic-sample">Il s'agit de <strong style="color: orange">la grande puissance de Git!</strong> Rendre les branches plus facile d'utilisation pour s'adapter à n'importe quelle méthode de travail.</p>
                 </section>
                 <section>
                     <h1>Git branch</h1>
-                    <pre><code class="bash">git branch ma-nouvelle-feature</code></pre>
-                    <p>Crée une nouvelle branche appelée <i>ma-nouvelle-feature</i>.</p>
-                    <p>Une branche est représentée dans Git par un tag pointant vers le derniers commit de la branch.</p>
+                    <p class="semantic-sample">Pour Git, une <strong style="color: orange">branche</strong> n'est qu'<strong style="color: orange">une chaine de commit</strong> pointant chacun sur son parent!</p>
+                    <pre><code class="bash">git branch ma-nouvelle-feature</code>Crée une nouvelle branche appelée <i>ma-nouvelle-feature</i></pre>
+                    <p class="semantic-sample">Une branche est représentée dans Git par <strong style="color: orange">un tag pointant vers le derniers commit</strong> de la branch.</p>
                     <div>
-                        <canvas id="branch" style="background: white; height: 280px !important;" height="280"></canvas>
+                        <canvas id="branch" style="background: white; height: 280px !important;" height="320"></canvas>
                     </div>
-                    <blockquote id="branch-note" hidden><p>Les deux branches peuvent maintenant évoluer indépendament l'une de l'autre.</p></blockquote>
+                    <blockquote id="branch-note" style="margin-top: 0" hidden><p>Les deux branches peuvent maintenant évoluer indépendament l'une de l'autre.</p></blockquote>
                     <script>
                         var template = getDefautTemplate();
                         template.commit.message.displayBranch = false;
@@ -420,24 +426,31 @@
                         gitGraphBranch.canvas.addEventListener("commit:mouseout", function (event) {
                         this.style.cursor = "auto";
                         });
-                        var master = gitGraphBranch.branch("master").commit({ message: "First commit", sha1: "6b2488" }).commit({ message: "HEAD^", sha1: "42eb2a"}).commit({ message: "Lala commit", sha1: "56fb6a" }).commit({sha1:"346791",message:"Last commit", dotColor: "red", messageColor: "red", onClick:function(commit){
-                            commit.tag="master";
+                        var master = gitGraphBranch.branch("master").commit({ message: "First commit", sha1: "6b2488" }).commit({ message: "Second commit", sha1: "42eb2a"}).commit({sha1:"346791",message:"Create a new branch here", dotColor: "red", messageColor: "red", tag:"master", onClick:function(commit){
                             commit.dotColor = null;
                             commit.messageColor = null;
+                            commit.tag = null;
                             var feat = gitGraphBranch.branch("ma-nouvelle-feature").commit().commit({tag:"ma-nouvelle-feature"});
+                            master.commit({tag:"master"});
                             document.getElementById("branch-note").removeAttribute("hidden");
                         }});
                     </script>
                 </section>
                 <section>
                     <h1>Git checkout</h1>
-                    <p>Cette commande sert à naviguer (déplacer le HEAD) dans l'arbre d'historique. De cette manière vous remplacer votre arborescence de fichier par l'état dans lequel il était au moment du commit choisi.</p>
+                    <p class="semantic-sample">Cette commande sert à <strong style="color: orange">naviguer</strong> (déplacer le HEAD) dans l'arbre d'historique. De cette manière vous <strong style="color: orange">remplacer votre arborescence de fichier</strong> par l'état dans lequel il était au moment du commit choisi.</p>
                     <pre><code class="bash">git checkout 6b2488</code></pre>
                     <pre><code class="bash">git checkout master</code></pre>
                     <blockquote><p>Vous pouvez identifier un commit juste avec le début de son SHA-1. S'il n'y a pas d'ambiguïté, Git comprendra naturellement de quel commit il s'agit.</p></blockquote>
                 </section>
                 <section>
                     <h1>Git stash</h1>
+                    <p class="semantic-sample">Le stash est utile pour <strong style="color: orange">stocker temporairement</strong> des modifications.</p>
+                    <pre><code class="bash">git stash</code>Prend l'ensemble de vos modifications en attente, et les place dans le stash.</pre>
+                    <pre><code class="bash">git stash pop</code>Vide le stash, et applique les modification qu'il contenait.</pre>
+                    <pre><code class="bash">git stash drop</code>Vide le stash sans appliquer les modifications.</pre>
+
+                    <blockquote><p>Si vous avez des modifications en cours que vous ne voulez pas commiter, mais que vous voulez tout de même mettre à jour votre branche avec le serveur, le stash est la solution ;)</p></blockquote>
                 </section>
             </section>
 
@@ -447,6 +460,13 @@
                 </section>
                 <section>
                     <h1>Git pull</h1>
+                    <p class="semantic-sample">Cette commande sert à récupérer les commit sur <i style="color:red">origin</i> pour mettre à jour notre dépôt local</p>
+                    <pre><code class="bash">git pull</code> Récupère et merge les commits de la branche serveur correspondant à notre branche locale.</pre>
+                    <pre><code class="bash">git pull origin master</code>Récupère et fusionne les commit de la branche master sur origin à notre branche locale.</pre>
+
+                    <blockquote ><p class="semantic-sample">La commande <i style="color:red">git pull</i> est une contraction des deux commande <i style="color:red">git fetch</i> et <i style="color:red">git merge</i>. Dans la plupart des cas (et aussi pour éviter des commit de merge inutiles) on préfèrera utiliser la commande suivante:</p>
+                        <pre><code class="bash">git pull --rebase</code></pre>
+                    </blockquote>
                 </section>
                 <section>
                     <h1>Git push</h1>
