@@ -227,7 +227,7 @@ node_modules/
                     <h1>Exemple</h1>
                     <canvas id="concept-historique" style="background: white"></canvas>
                     <script>
-
+                        (function() {
                         var template = getDefautTemplate();
                         var gitGraph = new GitGraph({ template, orientation: "vertical-reverse", author: "Thibault Ingargiola", elementId: "concept-historique", message: "message exemple" });
 
@@ -239,6 +239,7 @@ node_modules/
                         master.commit();
                         dev.commit();
                         feat2.merge(dev);
+                        })();
                     </script>
                 </section>
             </section>
@@ -371,12 +372,14 @@ node_modules/
                         <blockquote>Attention: on modifie l'historique en faisant cela. Le --amend n'est utilisé que lorsque les modification ne sont pas synchronisée avec le serveur.</blockquote>
                     </div>
                     <script>
+                        (function() {
                         var template = getDefautTemplate();
                         template.commit.message.displayBranch = false;
                         var gitGraphBefore = new GitGraph({ template, orientation: "vertical-reverse", author: "Thibault Ingargiola", elementId: "before-amend" });
                         var gitGraphAfter = new GitGraph({ template, orientation: "vertical-reverse", author: "Thibault Ingargiola", elementId: "after-amend" });
                         var master = gitGraphBefore.branch("master").commit({ message: "First commit", sha1: "6b2488" }).commit({ message: "Update README.text", sha1: "42eb2a" });
                         var master = gitGraphAfter.branch("master").commit({ message: "First commit", sha1: "6b2488" }).commit({ message: "Update README.txt", sha1: "aebf67", dotColor: "red", messageColor: "red" });
+                        })();
                     </script>
                 </section>
                 <section>
@@ -416,6 +419,7 @@ node_modules/
                     </div>
                     <blockquote id="branch-note" style="margin-top: 0" hidden><p>Les deux branches peuvent maintenant évoluer indépendament l'une de l'autre.</p></blockquote>
                     <script>
+                        (function() {
                         var template = getDefautTemplate();
                         template.commit.message.displayBranch = false;
                         var gitGraphBranch = new GitGraph({ template, orientation: "vertical-reverse", author: "Thibault Ingargiola", elementId: "branch" });
@@ -434,6 +438,7 @@ node_modules/
                             master.commit({tag:"master"});
                             document.getElementById("branch-note").removeAttribute("hidden");
                         }});
+                    })();
                     </script>
                 </section>
                 <section>
@@ -461,21 +466,84 @@ node_modules/
                 <section>
                     <h1>Git pull</h1>
                     <p class="semantic-sample">Cette commande sert à récupérer les commit sur <i style="color:red">origin</i> pour mettre à jour notre dépôt local</p>
-                    <pre><code class="bash">git pull</code> Récupère et merge les commits de la branche serveur correspondant à notre branche locale.</pre>
+                    <pre><code class="bash">git pull</code>Récupère et merge les commits de la branche serveur correspondant à notre branche locale.</pre>
                     <pre><code class="bash">git pull origin master</code>Récupère et fusionne les commit de la branche master sur origin à notre branche locale.</pre>
 
                     <blockquote ><p class="semantic-sample">La commande <i style="color:red">git pull</i> est une contraction des deux commande <i style="color:red">git fetch</i> et <i style="color:red">git merge</i>. Dans la plupart des cas (et aussi pour éviter des commit de merge inutiles) on préfèrera utiliser la commande suivante:</p>
                         <pre><code class="bash">git pull --rebase</code></pre>
+                        <pre><code class="bash">git config --global pull.rebase true</code>Tous vos pull seront des pull --rebase ;)</pre>
                     </blockquote>
                 </section>
                 <section>
                     <h1>Git push</h1>
+                    <p class="semantic-sample">Cette commande sert à <i style="color:red">pousser nos modifications locales</i> sur une branche serveur</p>
+                    <pre><code class="bash">git push</code>Pousse les commits locaux sur la branche serveur configurée pour notre branche locale</pre>
+                    <pre><code class="bash">git push origin master</code>Pousse les commits locaux sur la branche master sur le dépôt origin</pre>
+                    <blockquote><p class="semantic-sample">Si vous avez des modifications en attente, ou si vous n'êtes pas à jour avec le serveur, Git refusera de pusher!</p></blockquote>
                 </section>
                 <section>
                     <h1>Git merge</h1>
+                    <p class="semantic-sample"><i style="color:red">Fusionne</i> les modifications d'une branche sur une autre</p>
+                    <pre><code class="bash">git merge ma-nouvelle-feature</code>Merge la branche <i>ma-nouvelle-feautre</i> sur la branche courante</pre>
+                    <div>
+                        <canvas id="merge" style="background: white; height: 280px !important;" height="320"></canvas>
+                    </div>
+                        <script>
+                            (function() {
+                            var template = getDefautTemplate();
+                            template.commit.message.displayBranch = false;
+                            var gitGraphMerge = new GitGraph({ template, orientation: "vertical-reverse", author: "Thibault Ingargiola", elementId: "merge" });
+                            gitGraphMerge.canvas.addEventListener( "commit:mouseover", function ( event ) {
+                            this.style.cursor = "pointer";
+                            } );
+
+                            gitGraphMerge.canvas.addEventListener("commit:mouseout", function (event) {
+                            this.style.cursor = "auto";
+                            });
+                            var masterMerge = gitGraphMerge.branch("master").commit({ message: "First commit", sha1: "6b2488" }).commit({ message: "Second commit", sha1: "42eb2a"}).commit({sha1:"346791",message:"Create a new branch here"});
+                            var featMerge = gitGraphMerge.branch("ma-nouvelle-feature").commit().commit({message:"pret à merger!", tag:"ma-nouvelle-feature",dotColor: "red", messageColor: "red", onClick:function(commit){
+                                commit.dotColor = null;
+                                commit.messageColor = null;
+                                featMerge.merge(masterMerge,{tag:"master", dotColor: "red", messageColor: "red"});
+                            }});
+                            masterMerge.commit();
+                        })();
+                        </script>
                 </section>
                 <section>
                     <h1>Git rebase</h1>
+                    <p class="semantic-sample"><i style="color:red">Réaplique les commits</i> sur le commit sélectionné</p>
+                    <pre><code class="bash">git rebase master</code>Rebase la branche courante sur master</pre>
+                    <div>
+                            <canvas id="rebase" style="background: white; height: 280px !important;" height="320"></canvas>
+                            <canvas id="rebased" hidden style="background: white; height: 280px !important;" height="320"></canvas>
+                            <blockquote><p>Attention, on réécrit l'historique. Donc les <i style="color:red">SHA-1</i> des commits changent</p></blockquote>
+                        </div>
+                            <script>
+                                (function() {
+                                var template = getDefautTemplate();
+                                template.commit.message.displayBranch = false;
+                                var gitGraphRebase = new GitGraph({ template, orientation: "vertical-reverse", author: "Thibault Ingargiola", elementId: "rebase" });
+                                gitGraphRebase.canvas.addEventListener( "commit:mouseover", function ( event ) {
+                                this.style.cursor = "pointer";
+                                } );
+
+                                gitGraphRebase.canvas.addEventListener("commit:mouseout", function (event) {
+                                this.style.cursor = "auto";
+                                });
+                                var master = gitGraphRebase.branch("master").commit({ message: "First commit", sha1: "6b2488" }).commit({ message: "Second commit", sha1: "42eb2a"}).commit({sha1:"346791",message:"Create a new branch here"});
+                                var featRebase = gitGraphRebase.branch("ma-nouvelle-feature").commit().commit({message:"pret à rebase!", tag:"ma-nouvelle-feature", onClick:function(commit){
+                                    document.getElementById("rebase").setAttribute("hidden",null);
+                                    document.getElementById("rebase").removeAttribute("hidden");
+                                    var gitGraphRebased = new GitGraph({ template, orientation: "vertical-reverse", author: "Thibault Ingargiola", elementId: "rebase" });
+                                    var master = gitGraphRebased.branch("master").commit({ message: "First commit", sha1: "6b2488" }).commit({ message: "Second commit", sha1: "42eb2a"}).commit({sha1:"346791",message:"Create a new branch here"});
+                                    master.commit({tag:"master",sha1:"029bdd", dotColor:"green", messageColor:"green"});
+                                    master.checkout();
+                                    gitGraphRebased.branch("ma-nouvelle-feature").commit().commit({message:"pret à rebase!", tag:"ma-nouvelle-feature"});
+                                }});
+                                master.commit({tag:"master",sha1:"029bdd", dotColor:"green", messageColor:"green"});
+                            })();
+                            </script>
                 </section>
             </section>
 
