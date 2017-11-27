@@ -241,7 +241,7 @@
                         <i>bare</i> est un repository dans lequel on ne peut rien commiter directement. On ne peut que synchroniser
                         avec d'autre dépôt. </p>
                     <blockquote style="align-self: left; text-align: left">
-                        Note: Si vous fait un git init dans un repertoire étant déjà un depôt git. Rien ne se passe. Vous n'écraserez pas votre configuration.
+                        Note: Si vous faites un git init dans un repertoire étant déjà un depôt git. Rien ne se passe. Vous n'écraserez pas votre configuration.
                     </blockquote>
                 </section>
                 <section>
@@ -371,12 +371,28 @@
                 </section>
                 <section>
                     <h1>Git reset</h1>
+                    <p>Vous permez de revenir à l'état de n'importe quel commit.</p>
+                    <pre><code class="bash">git reset HEAD^</code></pre>
+                    <p>Revient au commit précédent. En gardant l'ensemble des modifications dans l'état <i>modified</i></p>
+                    <pre><code class="bash">git reset HEAD~3 --hard</code></pre>
+                    <p>Revient trois commit en arrière en effaçant l'ensemble des modifications.</p>
                 </section>
                 <section>
-                    <h1>Git revert</h1>
-                </section>
+                        <h1>Le HEAD</h1>
+                        <p>Il s'agit de votre emplacement actuel dans votre arbre d'historique</p>
+                        <div>
+                            <canvas id="head" style="background: white"></canvas>
+                        </div>
+                        <blockquote><p>C'est un tag particulier qui pointe vers le commit. On retrouvera cette notion pour les branches</p></blockquote>
+                        <script>
+                            var template = getDefautTemplate();
+                            template.commit.message.displayBranch = false;
+                            var gitGraphead = new GitGraph({ template, orientation: "vertical-reverse", author: "Thibault Ingargiola", elementId: "head" });
+                            var master = gitGraphead.branch("master").commit({ message: "First commit", sha1: "6b2488" }).commit({ message: "HEAD^", sha1: "42eb2a",tag:"HEAD~2" }).commit({ message: "Lala commit", sha1: "56fb6a", tag:"HEAD^" }).commit({sha1:"346791",message:"Last commit", dotColor: "red", messageColor: "red", tag:"HEAD"});
+                        </script>
+                    </section>
             </section>
-            <section style="font-size: 22px; color:white" data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+            <section style="font-size: 22px; color:white" data-transition="slide" data-background="#C67B9E" data-background-transition="zoom">
                 <section>
                     <h1>Les Branches</h1>
                 </section>
@@ -391,16 +407,9 @@
                 </section>
             </section>
 
-            <section style="font-size: 22px; color:white" data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+            <section style="font-size: 22px; color:white" data-transition="slide" data-background="#7BAFC6" data-background-transition="zoom">
                 <section>
                     <h1>Synchronisation</h1>
-                    <h3>Branche et remote</h3>
-                </section>
-                <section>
-                    <h1>Git fetch</h1>
-                </section>
-                <section>
-                    <h1>Git merge</h1>
                 </section>
                 <section>
                     <h1>Git pull</h1>
@@ -409,13 +418,16 @@
                     <h1>Git push</h1>
                 </section>
                 <section>
+                        <h1>Git merge</h1>
+                </section>
+                <section>
                     <h1>Git rebase</h1>
                 </section>
             </section>
 
-            <section style="font-size: 22px; color:white" data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+            <section style="font-size: 22px; color:white" data-transition="slide" data-background="orange" data-background-transition="zoom">
                 <section>
-                    <h1>Les conflits</h1>
+                    <h1>Git au quotidien</h1>
                 </section>
             </section>
         </div>
