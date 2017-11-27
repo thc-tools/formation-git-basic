@@ -63,6 +63,9 @@
         pre code {
             font-size: 14px !important;
         }
+        *[hidden]{
+            opacity: 0 !important;
+        }
     </style>
 
     <script>
@@ -395,12 +398,43 @@
             <section style="font-size: 22px; color:white" data-transition="slide" data-background="#C67B9E" data-background-transition="zoom">
                 <section>
                     <h1>Les Branches</h1>
+                    <p>Il s'agit de la grande puissance de Git! Rendre les branches plus facile d'utilisation pour s'adapter à n'importe quelle méthode de travail.</p>
                 </section>
                 <section>
                     <h1>Git branch</h1>
+                    <pre><code class="bash">git branch ma-nouvelle-feature</code></pre>
+                    <p>Crée une nouvelle branche appelée <i>ma-nouvelle-feature</i>.</p>
+                    <p>Une branche est représentée dans Git par un tag pointant vers le derniers commit de la branch.</p>
+                    <div>
+                        <canvas id="branch" style="background: white; height: 280px !important;" height="280"></canvas>
+                    </div>
+                    <blockquote id="branch-note" hidden><p>Les deux branches peuvent maintenant évoluer indépendament l'une de l'autre.</p></blockquote>
+                    <script>
+                        var template = getDefautTemplate();
+                        template.commit.message.displayBranch = false;
+                        var gitGraphBranch = new GitGraph({ template, orientation: "vertical-reverse", author: "Thibault Ingargiola", elementId: "branch" });
+                        gitGraphBranch.canvas.addEventListener( "commit:mouseover", function ( event ) {
+                        this.style.cursor = "pointer";
+                        } );
+
+                        gitGraphBranch.canvas.addEventListener("commit:mouseout", function (event) {
+                        this.style.cursor = "auto";
+                        });
+                        var master = gitGraphBranch.branch("master").commit({ message: "First commit", sha1: "6b2488" }).commit({ message: "HEAD^", sha1: "42eb2a"}).commit({ message: "Lala commit", sha1: "56fb6a" }).commit({sha1:"346791",message:"Last commit", dotColor: "red", messageColor: "red", onClick:function(commit){
+                            commit.tag="master";
+                            commit.dotColor = null;
+                            commit.messageColor = null;
+                            var feat = gitGraphBranch.branch("ma-nouvelle-feature").commit().commit({tag:"ma-nouvelle-feature"});
+                            document.getElementById("branch-note").removeAttribute("hidden");
+                        }});
+                    </script>
                 </section>
                 <section>
                     <h1>Git checkout</h1>
+                    <p>Cette commande sert à naviguer (déplacer le HEAD) dans l'arbre d'historique. De cette manière vous remplacer votre arborescence de fichier par l'état dans lequel il était au moment du commit choisi.</p>
+                    <pre><code class="bash">git checkout 6b2488</code></pre>
+                    <pre><code class="bash">git checkout master</code></pre>
+                    <blockquote><p>Vous pouvez identifier un commit juste avec le début de son SHA-1. S'il n'y a pas d'ambiguïté, Git comprendra naturellement de quel commit il s'agit.</p></blockquote>
                 </section>
                 <section>
                     <h1>Git stash</h1>
@@ -418,7 +452,7 @@
                     <h1>Git push</h1>
                 </section>
                 <section>
-                        <h1>Git merge</h1>
+                    <h1>Git merge</h1>
                 </section>
                 <section>
                     <h1>Git rebase</h1>
