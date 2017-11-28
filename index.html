@@ -72,6 +72,7 @@
 
         function getDefautTemplate() {
             var baseTemplate = new GitGraph.Template().get('metro');
+            baseTemplate.colors.push("green");
             return template = {
                 colors: baseTemplate.colors,
                 showLabel: true,
@@ -547,9 +548,73 @@ node_modules/
                 </section>
             </section>
 
-            <section style="font-size: 22px; color:white" data-transition="slide" data-background="orange" data-background-transition="zoom">
+            <section style="font-size: 22px; color:white" data-transition="slide" data-background-transition="zoom">
                 <section>
                     <h1>Git au quotidien</h1>
+                </section>
+                <section>
+                    <h1>Les logiciels de dépôt</h1>
+                    <p class="semantic-sample">Ils permettent de gérer efficacemùent un dépôt. <i>Sécuriser</i> certaine branches, mettre en place des <i>builds automatiques</i>, des <i>workflows</i> particuliers...</p>
+                    <div style="display: flex; justify-content: space-around">
+                        <img src="images/gitlab-logo.svg" style="width: 300px;padding:15px; background: white;" alt="">
+                        <img src="images/TFS-logo.png" style="padding:15px; background: white;"alt="">
+                    </div>
+                </section>
+                <section>
+                    <h1>Les clients graphiques</h1>
+                    <p class="semantic-sample">Indispensable à une <i>utilisation</i> efficaces de Git. On evite les erreurs, on comprend et donc <i>maitrise ce que l'on fait</i>.</p>
+                    <img src="images/TortoiseGit_logo.svg" style="width: 300px;padding:15px; background: white;" alt="">
+                    <div><a href="https://tortoisegit.org/">Site web</a></div>
+                </section>
+            </section>
+            <section style="font-size: 22px; color:white" data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
+                <section>
+                    <h1>Workflows</h1>
+                    <p class="semantic-sample">Pour une <i>organisation du travail</i> efficace et qualitative!</p>
+                </section>
+                <section>
+                    <h1>Workflow centralisé</h1>
+                    <p class="semantic-sample"><i>Flow mono-branche</i>. Seule la master est présente, chaque personne doit pusher des versions stables de l'application.</p>
+                    <p class="semantic-sample">Flow le plus utilisé à l'heure actuelle chez Klee. Simple, léger, efficace. Pas de garde fou ni de modularité.</p>
+
+                    <canvas id="central-flow" style="background: white; height: 280px !important;" height="320"></canvas>
+                    <script>
+                        (function() {
+                        var template = getDefautTemplate();
+                        template.commit.message.displayBranch = false;
+                        var gitGraph = new GitGraph({ template, orientation: "horizontal", author: "Thibault Ingargiola", elementId: "central-flow" });
+
+                        var master = gitGraph.branch("master").commit({ message: "First commit", sha1: "6b2488" }).commit({ message: "Second commit", sha1: "42eb2a"}).commit({sha1:"346791",message:"Create a new branch here"});
+                        master.commit({sha1:"029bdd",tag:"origin/master"}).commit({dotColor:"purple"}).commit({dotColor:"purple"}).commit({dotColor:"purple",tag:"local/master"});
+                    })();
+                    </script>
+                </section>
+                <section>
+                    <h1>Feature branching</h1>
+                    <p class="semantic-sample"><i>Flow multi-branches</i>. Une branche principale servant à l'integration des fonctionnalités (souvent appelée <i>develop</i>). Puis <i>une branche par fonctionnalité</i> basé sur développe.</p>
+                    <p class="semantic-sample">L'idée de ce flow est de séparer les concepts métier en <i>story</i> utilisateurs. Il permet une plus grande modularité et une meilleure maitrise dans la façon de travailler.</p>
+                    <p class="semantic-sample">Souvent couplé avec la méthodologie <i>Kanban</i>. Possibilité de forcer la relecture de code avant intégration via <i>pull request</i></p>
+                    <p class="semantic-sample">Travaille supplémentaire à l'<i>intégration d'une feature</i>.</p>
+                </section>
+                <section>
+                        <canvas id="feature-branch-flow" style="background: white; height: 280px !important;" height="320"></canvas>
+                        <script>
+                            (function() {
+                            var template = getDefautTemplate();
+                            var gitGraph = new GitGraph({ template, orientation: "vertical-reverse", author: "Thibault Ingargiola", elementId: "feature-branch-flow" });
+
+                            var master = gitGraph.branch("master").commit({ message: "First commit", sha1: "6b2488" }).commit({sha1:"346791",message:"Create a new branch here"});
+                            var feat3 = master.branch("feature-3").commit();
+                            var feat1 = master.commit({sha1:"029bdd"}).branch("feature-1").commit().commit();
+                            var feat2 = master.commit().commit().branch("feature-2").commit().commit().commit();;
+                            feat2.merge(master);
+                            feat3.commit();
+                            master.commit();
+                            feat3.merge(master);
+                            feat1.merge(master);
+
+                        })();
+                        </script>
                 </section>
             </section>
         </div>
