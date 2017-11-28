@@ -575,7 +575,7 @@ node_modules/
                 <section>
                     <h1>Workflow centralisé</h1>
                     <p class="semantic-sample"><i>Flow mono-branche</i>. Seule la master est présente, chaque personne doit pusher des versions stables de l'application.</p>
-                    <p class="semantic-sample">Flow le plus utilisé à l'heure actuelle chez Klee. Simple, léger, efficace. Pas de garde fou ni de modularité.</p>
+                    <p class="semantic-sample">Flow le plus utilisé à l'heure actuelle chez Klee. <i>Simple, léger, efficace</i>. Pas de garde fou ni de modularité.</p>
 
                     <canvas id="central-flow" style="background: white; height: 280px !important;" height="320"></canvas>
                     <script>
@@ -588,6 +588,14 @@ node_modules/
                         master.commit({sha1:"029bdd",tag:"origin/master"}).commit({dotColor:"purple"}).commit({dotColor:"purple"}).commit({dotColor:"purple",tag:"local/master"});
                     })();
                     </script>
+                </section>
+                <section>
+                    <h1>Les étapes de flow centralisé</h1>
+                    <ol>
+                        <li class="semantic-sample">Je code sur mon <i>dépôt local</i></li>
+                        <li class="semantic-sample">Je me synchronise avec <i>origin</i> (pull --rebase)</li>
+                        <li class="semantic-sample">Je <i>push</i></li>
+                    </ol>
                 </section>
                 <section>
                     <h1>Feature branching</h1>
@@ -612,6 +620,36 @@ node_modules/
                             master.commit();
                             feat3.merge(master);
                             feat1.merge(master);
+
+                        })();
+                        </script>
+                </section>
+                <section>
+                    <h1>Les étapes du feature-branching</h1>
+                    <ol>
+                        <li class="semantic-sample">Je crée une <i>branche</i> à partir de dev liée à une <i>issue/WI</i></li>
+                        <li class="semantic-sample">Je code sur ma branche (<i>commit et push régulier</i>)</li>
+                        <li class="semantic-sample">Je resous les conflits avec dev (<i>merge ou rebase</i>)</li>
+                        <li class="semantic-sample">Je crée la <i>pull request</i></li>
+                        <li class="semantic-sample"><i>Un relecteur valide</i> ma pull request ou me renvoie à l'étape 2</li>
+                    </ol>
+                </section>
+                <section>
+                    <h1>L'interet du rebase</h1>
+                        <canvas id="feature-branch-rebase-flow" style="background: white; height: 280px !important;" height="320"></canvas>
+                        <script>
+                            (function() {
+                            var template = getDefautTemplate();
+                            var gitGraph = new GitGraph({ template, orientation: "vertical-reverse", author: "Thibault Ingargiola", elementId: "feature-branch-rebase-flow" });
+
+                            var master = gitGraph.branch("master").commit({ message: "First commit", sha1: "6b2488" }).commit({sha1:"346791",message:"Create a new branch here"});
+                            var feat1 = master.commit({sha1:"029bdd"}).branch("feature-1").commit().commit();
+                            feat1.merge(master);
+                            var feat2 = master.branch("feature-2").commit().commit().commit();;
+                            feat2.merge(master);
+                            var feat3 = master.branch("feature-3").commit();
+                            feat3.commit();
+                            feat3.merge(master);
 
                         })();
                         </script>
