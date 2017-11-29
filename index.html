@@ -237,9 +237,10 @@ node_modules/
                         var feat1 = dev.branch("feature1").commit();
                         var feat2 = dev.branch("feature2").commit({ message: "lala" });
                         feat1.merge(dev);
-                        master.commit();
+                        dev.merge(master,{tag:"V0.0.1"});
                         dev.commit();
                         feat2.merge(dev);
+                        dev.merge(master,{tag:"V0.0.2"})
                         })();
                     </script>
                 </section>
@@ -435,6 +436,7 @@ node_modules/
                             commit.dotColor = null;
                             commit.messageColor = null;
                             commit.tag = null;
+                            commit.onClick = null;
                             var feat = gitGraphBranch.branch("ma-nouvelle-feature").commit().commit({tag:"ma-nouvelle-feature"});
                             master.commit({tag:"master"});
                             document.getElementById("branch-note").removeAttribute("hidden");
@@ -501,13 +503,15 @@ node_modules/
                             gitGraphMerge.canvas.addEventListener("commit:mouseout", function (event) {
                             this.style.cursor = "auto";
                             });
-                            var masterMerge = gitGraphMerge.branch("master").commit({ message: "First commit", sha1: "6b2488" }).commit({ message: "Second commit", sha1: "42eb2a"}).commit({sha1:"346791",message:"Create a new branch here"});
-                            var featMerge = gitGraphMerge.branch("ma-nouvelle-feature").commit().commit({message:"pret à merger!", tag:"ma-nouvelle-feature",dotColor: "red", messageColor: "red", onClick:function(commit){
-                                commit.dotColor = null;
+                            var masterMerge = gitGraphMerge.branch("master").commit({ message: "First commit", sha1: "6b2488" }).commit({ message: "Second commit", sha1: "42eb2a"}).commit({tsha1:"346791",message:"Create a new branch here"});
+                            var featMerge = gitGraphMerge.branch("ma-nouvelle-feature").commit().commit({message:"pret à merger!", tag:"ma-nouvelle-feature"});
+                            masterMerge.commit({tag:"master",dotColor: "red", messageColor: "red", onClick:function(commit){
+                                commit.dotColor = template.colors[0];
                                 commit.messageColor = null;
-                                featMerge.merge(masterMerge,{tag:"master", dotColor: "red", messageColor: "red"});
+                                commit.onClick = null;
+                                commit.tag = null;
+                                featMerge.merge(masterMerge,{tag:"master"});
                             }});
-                            masterMerge.commit();
                         })();
                         </script>
                 </section>
@@ -533,7 +537,8 @@ node_modules/
                                 this.style.cursor = "auto";
                                 });
                                 var master = gitGraphRebase.branch("master").commit({ message: "First commit", sha1: "6b2488" }).commit({ message: "Second commit", sha1: "42eb2a"}).commit({sha1:"346791",message:"Create a new branch here"});
-                                var featRebase = gitGraphRebase.branch("ma-nouvelle-feature").commit().commit({message:"pret à rebase!", tag:"ma-nouvelle-feature", onClick:function(commit){
+                                var featRebase = gitGraphRebase.branch("ma-nouvelle-feature").commit().commit({message:"pret à rebase!", tag:"ma-nouvelle-feature",dotColor:"red", onClick:function(commit){
+                                    commit.onClick = null;
                                     document.getElementById("rebase").setAttribute("hidden",null);
                                     document.getElementById("rebase").removeAttribute("hidden");
                                     var gitGraphRebased = new GitGraph({ template, orientation: "vertical-reverse", author: "Thibault Ingargiola", elementId: "rebase" });
@@ -653,6 +658,12 @@ node_modules/
 
                         })();
                         </script>
+                </section>
+            </section>
+            <section style="font-size: 22px; color:white" data-transition="slide" data-background-transition="zoom">
+                <section>
+                    <h1>Exercices</h1>
+                    <p class="semantic-sample"></p>
                 </section>
             </section>
         </div>
