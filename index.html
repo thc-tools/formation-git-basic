@@ -137,7 +137,7 @@
                                 Git a été créé par Linus Torvald (créateur de Linux) en avril 2005 pour proposer une alternative gratuite à BitKeeper.
                             </p>
                             <p class="semantic-sample" style="text-align: left;">
-                                C’est un gestionnaire de version décentralisé. Cette gestion décentralisé lui a valu son succès, notamment auprès de la communauté
+                                C’est un gestionnaire de version décentralisé. Cette gestion décentralisée lui a valu son succès, notamment auprès de la communauté
                                 du logiciel libre.
                             </p>
                             <p class="semantic-sample" style="text-align: left;">
@@ -179,7 +179,7 @@
                     <img src="./images/file-states.png" style="background-color: white;" />
                     <blockquote style="width:100%; ">
                         <ul class="semantic-sample">
-                            <li>Untracked: Le fichiers n’est pas indexé, et n’est pas considéré pour le calcul des différences
+                            <li>Untracked: Le fichier n’est pas indexé, et n’est pas considéré pour le calcul des différences
                                 entre deux révisions
                             </li>
                             <li>Stagged: Le fichier fait parti d’un lot prêt à être commité</li>
@@ -194,7 +194,7 @@
                 </section>
                 <section>
                     <h1>Ignorer des fichiers</h1>
-                    <p class="semantic-sample">Il est possible de faire en sorte que des fichiers présent dans votre répertoire soit <i>ignorés</i> par Git. Il suffit de placer les repertoires/fichiers à ignorer dans le <i>.gitignore</i></p>
+                    <p class="semantic-sample">Il est possible de faire en sorte que des fichiers présents dans votre répertoire soit <i>ignorés</i> par Git. Il suffit de placer les repertoires/fichiers à ignorer dans le <i>.gitignore</i></p>
                     <pre><code class="txt">
 lib/
 plugin/
@@ -208,7 +208,7 @@ node_modules/
                 style="color:black;">
                 <section>
                     <h1>L'historique</h1>
-                    <p>L'historique de git est créé comme une chaine de pointeurs entre les différentes révisions (<strong style="color:red">commits</strong>) du projet</p>
+                    <p>L'historique de git est créé comme une chaîne de pointeurs entre les différentes révisions (<strong style="color:red">commits</strong>) du projet</p>
                 </section>
                 <section>
                     <h1>Le Commit</h1>
@@ -259,7 +259,8 @@ node_modules/
                         <strong>bare</strong> est un repository dans lequel on ne peut rien commiter directement. On ne peut que synchroniser
                         avec d'autre dépôt. </p>
                     <blockquote style="align-self: left; text-align: left">
-                        Note: Si vous faites un git init dans un repertoire étant déjà un depôt git. Rien ne se passe. Vous n'écraserez pas votre configuration.
+                        Note: Si vous faites un git init dans un repertoire en étant déjà un depôt git, rien ne se passe. 
+						Vous n'écraserez pas votre configuration.
                     </blockquote>
                 </section>
                 <section>
@@ -268,11 +269,11 @@ node_modules/
                             projet est créé dans le répertoire courant, et le dépôt est copié dans ce dossier.</p>
                     <pre><code class="bash">git clone __url__</code></pre>
 
-                    <pre><code class="bash">git clone https://github.com/Tsj-/formation-git.git</code>Par exemple si vous voulez contribuer à l'amélioration de cette formation, vous pouvez copier le dépôtet commencer à coder =)</pre>
+                    <pre><code class="bash">git clone https://github.com/Tsj-/formation-git.git</code>Par exemple si vous voulez contribuer à l'amélioration de cette formation, vous pouvez copier le dépôt et commencer à coder =)</pre>
                 </section>
                 <section>
                     <h1>Git config</h1>
-                    <p>Permet de régler les configurations du compte git. Il est possible de gérer une hierarchie des configuration:</p>
+                    <p>Permet de régler les configurations du compte git. Il est possible de gérer une hiérarchie des configuration:</p>
                     <ul>
                         <li>system</li>
                         <li>global</li>
@@ -288,7 +289,7 @@ node_modules/
                     <pre><code class="bash">git config --global alias.ci commit</code></pre>
                     <pre><code class="bash">git config --global alias.amend git ci --amend</code></pre>
                     <pre>Ainsi la commande<code class="bash">git amend</code></pre>
-                    <pre>devient equivalente à:<code class="bash">git commit --amend</code></pre>
+                    <pre>devient équivalente à:<code class="bash">git commit --amend</code></pre>
                     </ul>
                 </section>
                 <section>
@@ -348,10 +349,10 @@ node_modules/
                 <section>
                     <h1>Git commit</h1>
                     <p class="semantic-sample">Cette commande <i>sauvegarde l'ensemble des modifications</i> dans l'état
-                        <i>staged</i> etl'ajoute à l'historique du projet.</p>
+                        <i>staged</i> et l'ajoute à l'historique du projet.</p>
                     <pre><code class="bash">git commit -m "__message_de_commit__"</code></pre>
                     <p class="semantic-sample">Une fois nos modifications commitées, <i>Git ne les oubliera jamais</i>. Il est bien sur possible de modifier
-                        l'historique, mais là encore il existe des possibilité pour retrouver nos modifications.</p>
+                        l'historique, mais là encore il existe des possibilités pour retrouver nos modifications.</p>
                     <blockquote>
                         <p>Attention! Ceci n'a rien à voir avec la fonction commit de SVN. Ici l'historisation n'est faite que
                             sur votre depôt local. La synchronisation avec un serveur central se fait séparément.</p>
@@ -365,13 +366,13 @@ node_modules/
                 </section>
                 <section>
                     <h1>Git commit --amend</h1>
-                    <pre><code class="bash">git commit --amend</code>Apporte les nouvelle modifications à l'ancien commit.</pre>
+                    <pre><code class="bash">git commit --amend</code>Apporte les nouvelles modifications à l'ancien commit.</pre>
                     <div>
                         <canvas id="before-amend" style="background: white"></canvas>
                         <pre><code class="bash">git commit --amend -m "Update README.txt"</code>Applique les modification à l'ancien commit, et change le message de commit en <i>"Update README.txt"</i>.</pre>
                         <canvas id="after-amend" style="background: white"></canvas>
 
-                        <blockquote>Attention: on modifie l'historique en faisant cela. Le --amend n'est utilisé que lorsque les modification ne sont pas synchronisée avec le serveur.</blockquote>
+                        <blockquote>Attention: on modifie l'historique en faisant cela. Le --amend n'est utilisé que lorsque les modifications ne sont pas synchronisées avec le serveur.</blockquote>
                     </div>
                     <script>
                         (function() {
@@ -388,8 +389,8 @@ node_modules/
                     <h1>Git reset</h1>
                     <p class="semantic-sample">Vous permez de <i>revenir à l'état de n'importe quel commit</i>. <i>Efface les liens</i> des commits concernés.</p>
                     <pre><code class="bash">git reset HEAD^</code>Revient au commit précédent. En gardant l'ensemble des modifications dans l'état <i>modified</i></pre>
-                    <pre><code class="bash">git reset HEAD~3 --hard</code>Revient trois commit en arrière en effaçant l'ensemble des modifications.</pre>
-                    <pre><code class="bash">git reset origin/master --hard</code>Revient à l'état dans lequel est la branch sur le dépôt origin.</pre>
+                    <pre><code class="bash">git reset HEAD~3 --hard</code>Revient trois commits en arrière en effaçant l'ensemble des modifications.</pre>
+                    <pre><code class="bash">git reset origin/master --hard</code>Revient à l'état dans lequel est la branche sur le dépôt origin.</pre>
                 </section>
                 <section>
                         <h1>Le HEAD</h1>
@@ -413,9 +414,9 @@ node_modules/
                 </section>
                 <section>
                     <h1>Git branch</h1>
-                    <p class="semantic-sample">Pour Git, une <strong style="color: orange">branche</strong> n'est qu'<strong style="color: orange">une chaine de commit</strong> pointant chacun sur son parent!</p>
+                    <p class="semantic-sample">Pour Git, une <strong style="color: orange">branche</strong> n'est qu'<strong style="color: orange">une chaîne de commit</strong> pointant chacun sur son parent!</p>
                     <pre><code class="bash">git branch ma-nouvelle-feature</code>Crée une nouvelle branche appelée <i>ma-nouvelle-feature</i></pre>
-                    <p class="semantic-sample">Une branche est représentée dans Git par <strong style="color: orange">un tag pointant vers le derniers commit</strong> de la branch.</p>
+                    <p class="semantic-sample">Une branche est représentée dans Git par <strong style="color: orange">un tag pointant vers le dernier commit</strong> de la branch.</p>
                     <div>
                         <canvas id="branch" style="background: white; height: 280px !important;" height="320"></canvas>
                     </div>
@@ -446,7 +447,7 @@ node_modules/
                 </section>
                 <section>
                     <h1>Git checkout</h1>
-                    <p class="semantic-sample">Cette commande sert à <strong style="color: orange">naviguer</strong> (déplacer le HEAD) dans l'arbre d'historique. De cette manière vous <strong style="color: orange">remplacer votre arborescence de fichier</strong> par l'état dans lequel il était au moment du commit choisi.</p>
+                    <p class="semantic-sample">Cette commande sert à <strong style="color: orange">naviguer</strong> (déplacer le HEAD) dans l'arbre d'historique. De cette manière, vous <strong style="color: orange">remplacez votre arborescence de fichier</strong> par celle en l'état au moment du commit choisi.</p>
                     <pre><code class="bash">git checkout 6b2488</code></pre>
                     <pre><code class="bash">git checkout master</code></pre>
                     <blockquote><p>Vous pouvez identifier un commit juste avec le début de son SHA-1. S'il n'y a pas d'ambiguïté, Git comprendra naturellement de quel commit il s'agit.</p></blockquote>
@@ -455,7 +456,7 @@ node_modules/
                     <h1>Git stash</h1>
                     <p class="semantic-sample">Le stash est utile pour <strong style="color: orange">stocker temporairement</strong> des modifications.</p>
                     <pre><code class="bash">git stash</code>Prend l'ensemble de vos modifications en attente, et les place dans le stash.</pre>
-                    <pre><code class="bash">git stash pop</code>Vide le stash, et applique les modification qu'il contenait.</pre>
+                    <pre><code class="bash">git stash pop</code>Vide le stash, et applique les modifications qu'il contenait.</pre>
                     <pre><code class="bash">git stash drop</code>Vide le stash sans appliquer les modifications.</pre>
 
                     <blockquote><p>Si vous avez des modifications en cours que vous ne voulez pas commiter, mais que vous voulez tout de même mettre à jour votre branche avec le serveur, le stash est la solution ;)</p></blockquote>
@@ -487,7 +488,7 @@ node_modules/
                 <section>
                     <h1>Git merge</h1>
                     <p class="semantic-sample"><i style="color:red">Fusionne</i> les modifications d'une branche sur une autre</p>
-                    <pre><code class="bash">git merge ma-nouvelle-feature</code>Merge la branche <i>ma-nouvelle-feautre</i> sur la branche courante</pre>
+                    <pre><code class="bash">git merge ma-nouvelle-feature</code>Merge la branche <i>ma-nouvelle-feature</i> sur la branche courante</pre>
                     <div>
                         <canvas id="merge" style="background: white; height: 280px !important;" height="320"></canvas>
                     </div>
@@ -567,7 +568,7 @@ node_modules/
                 </section>
                 <section>
                     <h1>Les clients graphiques</h1>
-                    <p class="semantic-sample">Indispensable à une <i>utilisation</i> efficaces de Git. On evite les erreurs, on comprend et donc <i>maitrise ce que l'on fait</i>.</p>
+                    <p class="semantic-sample">Indispensable à une <i>utilisation</i> efficaces de Git. On evite les erreurs, on comprend et donc <i>maîtrise ce que l'on fait</i>.</p>
                     <img src="images/TortoiseGit_logo.svg" style="width: 300px;padding:15px; background: white;" alt="">
                     <div><a href="https://tortoisegit.org/">Site web</a></div>
                 </section>
@@ -604,10 +605,10 @@ node_modules/
                 </section>
                 <section>
                     <h1>Feature branching</h1>
-                    <p class="semantic-sample"><i>Flow multi-branches</i>. Une branche principale servant à l'integration des fonctionnalités (souvent appelée <i>develop</i>). Puis <i>une branche par fonctionnalité</i> basé sur développe.</p>
-                    <p class="semantic-sample">L'idée de ce flow est de séparer les concepts métier en <i>story</i> utilisateurs. Il permet une plus grande modularité et une meilleure maitrise dans la façon de travailler.</p>
+                    <p class="semantic-sample"><i>Flow multi-branches</i>. Une branche principale servant à l'integration des fonctionnalités (souvent appelée <i>develop</i>). Puis <i>une branche par fonctionnalité</i> basée sur <i>develop</i>.</p>
+                    <p class="semantic-sample">L'idée de ce flow est de séparer les concepts métiers en <i>story</i> utilisateurs. Il permet une plus grande modularité et une meilleure maîtrise dans la façon de travailler.</p>
                     <p class="semantic-sample">Souvent couplé avec la méthodologie <i>Kanban</i>. Possibilité de forcer la relecture de code avant intégration via <i>pull request</i></p>
-                    <p class="semantic-sample">Travaille supplémentaire à l'<i>intégration d'une feature</i>.</p>
+                    <p class="semantic-sample">Travail supplémentaire à l'<i>intégration d'une feature</i>.</p>
                 </section>
                 <section>
                         <canvas id="feature-branch-flow" style="background: white; height: 280px !important;" height="320"></canvas>
@@ -632,15 +633,15 @@ node_modules/
                 <section>
                     <h1>Les étapes du feature-branching</h1>
                     <ol>
-                        <li class="semantic-sample">Je crée une <i>branche</i> à partir de dev liée à une <i>issue/WI</i></li>
+                        <li class="semantic-sample">Je crée une <i>branche</i> à partir de devs liés à une <i>issue/WI</i></li>
                         <li class="semantic-sample">Je code sur ma branche (<i>commit et push régulier</i>)</li>
-                        <li class="semantic-sample">Je resous les conflits avec dev (<i>merge ou rebase</i>)</li>
+                        <li class="semantic-sample">Je résous les conflits avec <i>dev</i> (<i>merge</i> ou <i>rebase</i>)</li>
                         <li class="semantic-sample">Je crée la <i>pull request</i></li>
                         <li class="semantic-sample"><i>Un relecteur valide</i> ma pull request ou me renvoie à l'étape 2</li>
                     </ol>
                 </section>
                 <section>
-                    <h1>L'interet du rebase</h1>
+                    <h1>L'intérêt du rebase</h1>
                         <canvas id="feature-branch-rebase-flow" style="background: white; height: 280px !important;" height="320"></canvas>
                         <script>
                             (function() {
@@ -663,7 +664,8 @@ node_modules/
             <section style="font-size: 22px; color:white" data-transition="slide" data-background-transition="zoom">
                 <section>
                     <h1>Exercices</h1>
-                    <p class="semantic-sample"></p>
+                    <p class="semantic-sample"><a href="https://github.com/SalomonBrys/Git-Exercices" target="_blank" >Prise en main</a></p>
+					<p class="semantic-sample"><a href="https://learngitbranching.js.org/" target="_blank" >Branching</a></p>
                 </section>
             </section>
         </div>
