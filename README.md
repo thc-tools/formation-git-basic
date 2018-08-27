@@ -1,5 +1,5 @@
 # formation-git-basic
-http://getfocus.io/formation-git-basic
+https://get-focus.github.io/formation-git-basic/
 
 ## Useful links
 
