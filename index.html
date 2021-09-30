@@ -1,299 +1,344 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="utf-8" />
 
-<head>
-    <meta charset="utf-8">
+        <title>Git - Les bases</title>
 
-    <title>Git - Les bases</title>
+        <meta name="description" content="Formation destinée aux développeur pour une utilisation basique de Git" />
+        <meta name="author" content="Michou Dupont" />
 
-    <meta name="description" content="Formation destinée aux développeur pour une utilisation basique de Git">
-    <meta name="author" content="Thibault INGARGIOLA">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui"
+        />
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+        <link rel="stylesheet" href="css/reveal.css" />
+        <link rel="stylesheet" href="css/theme/moon.css" id="theme" />
 
-    <link rel="stylesheet" href="css/reveal.css">
-    <link rel="stylesheet" href="css/theme/moon.css" id="theme">
+        <!-- Code syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css" />
 
-    <!-- Code syntax highlighting -->
-    <link rel="stylesheet" href="lib/css/zenburn.css">
+        <!-- MD icons -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 
-    <!-- MD icons -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/gitgraph.css" />
+        <script src="js/gitgraph.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="css/gitgraph.css" />
-    <script src="js/gitgraph.js"></script>
+        <!-- Printing and PDF exports -->
+        <script>
+            var link = document.createElement("link");
+            link.rel = "stylesheet";
+            link.type = "text/css";
+            link.href = window.location.search.match(/print-pdf/gi) ? "css/print/pdf.css" : "css/print/paper.css";
+            document.getElementsByTagName("head")[0].appendChild(link);
+        </script>
 
-    <!-- Printing and PDF exports -->
-    <script>
-        var link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.type = 'text/css';
-        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
-        document.getElementsByTagName('head')[0].appendChild(link);
-    </script>
-
-    <style>
-        .inline {
-            display: flex;
-        }
-
-        .inline>div {
-            flex: 1;
-        }
-
-        .semantic-sample {
-            font-size: 18px !important;
-        }
-
-        .semantic-sample strong,
-        .semantic-sample b,
-        .semantic-sample em,
-        .semantic-sample i,
-        .semantic-sample u {
-            color: #78BAE6;
-        }
-
-        table tr td code {
-            color: white;
-        }
-
-        pre code {
-            font-size: 14px !important;
-        }
-        *[hidden]{
-            opacity: 0 !important;
-        }
-    </style>
-
-    <script>
-
-        function getDefautTemplate() {
-            var baseTemplate = new GitGraph.Template().get('metro');
-            baseTemplate.colors.push("green");
-            return template = {
-                colors: baseTemplate.colors,
-                showLabel: true,
-                branch: {
-                    lineWidth: 7,
-                    spacingX: 50,
-                    showLabel: false,                  // display branch names on graph
-                },
-                commit: {
-                    spacingY: -40,
-                    dot: {
-                        size: 10
-                    },
-                    message: {
-                        defaultMessage: "message exemple",
-                        displayAuthor: true,
-                        displayBranch: true,
-                        displayHash: true,
-                        font: baseTemplate.commit.message.font
-                    },
-                    shouldDisplayTooltipsInCompactMode: true, // default = true
-                    tooltipHTMLFormatter: function (commit) {
-                        return "" + commit.sha1 + "" + ": " + commit.message;
-                    }
-                }
+        <style>
+            .inline {
+                display: flex;
             }
-        };
 
-    </script>
+            .inline > div {
+                flex: 1;
+            }
 
-    <!--[if lt IE 9]>
-    <script src="lib/js/html5shiv.js"></script>
-    <![endif]-->
-</head>
+            .semantic-sample {
+                font-size: 18px !important;
+            }
 
-<body>
+            .semantic-sample strong,
+            .semantic-sample b,
+            .semantic-sample em,
+            .semantic-sample i,
+            .semantic-sample u {
+                color: #78bae6;
+            }
 
-    <div class="reveal">
+            table tr td code {
+                color: white;
+            }
 
-        <!-- Any section element inside of this container is displayed as a slide -->
-        <div class="slides">
-            <section>
-                <section data-markdown>
-                    # Git
-                    ### Les bases de la gestion de version
-                </section>
-                <section data-markdown>
-                    # Sommaire
-                    * Les concepts de Git
-                    * Les fonctions de bases
-                    * Travailler concrètement avec Git
-                    * Pour aller plus loin
-                </section>
-            </section>
+            pre code {
+                font-size: 14px !important;
+            }
+            *[hidden] {
+                opacity: 0 !important;
+            }
+        </style>
 
-            <section>
+        <script>
+            function getDefautTemplate() {
+                var baseTemplate = new GitGraph.Template().get("metro");
+                baseTemplate.colors.push("green");
+                return (template = {
+                    colors: baseTemplate.colors,
+                    showLabel: true,
+                    branch: {
+                        lineWidth: 7,
+                        spacingX: 50,
+                        showLabel: false, // display branch names on graph
+                    },
+                    commit: {
+                        spacingY: -40,
+                        dot: {
+                            size: 10,
+                        },
+                        message: {
+                            defaultMessage: "message exemple",
+                            displayAuthor: true,
+                            displayBranch: true,
+                            displayHash: true,
+                            font: baseTemplate.commit.message.font,
+                        },
+                        shouldDisplayTooltipsInCompactMode: true, // default = true
+                        tooltipHTMLFormatter: function (commit) {
+                            return "" + commit.sha1 + "" + ": " + commit.message;
+                        },
+                    },
+                });
+            }
+        </script>
+
+        <!--[if lt IE 9]>
+            <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+        <div class="reveal">
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
                 <section>
-                    <h1>Kesako?</h1>
-                    <div style="display:flex; align-items:center; justify-content: space-around;">
+                    <section data-markdown># Git ### Les bases de la gestion de version</section>
+                    <section data-markdown>
+                        # Sommaire * Les concepts de Git * Les fonctions de bases * Travailler concrètement avec Git *
+                        Pour aller plus loin
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h1>Kesako?</h1>
+                        <div style="display: flex; align-items: center; justify-content: space-around">
+                            <div>
+                                <p class="semantic-sample" style="text-align: left">
+                                    Git a été créé par Linus Torvald (créateur de Linux) en avril 2005 pour proposer une
+                                    alternative gratuite à BitKeeper.
+                                </p>
+                                <p class="semantic-sample" style="text-align: left">
+                                    C’est un gestionnaire de version décentralisé. Cette gestion décentralisée lui a
+                                    valu son succès, notamment auprès de la communauté du logiciel libre.
+                                </p>
+                                <p class="semantic-sample" style="text-align: left">
+                                    Git a été pensé comme un système de fichier à part entière qui gère lui-même le
+                                    versionnement de son arborescence (d’après Linus Torvald).
+                                </p>
+                            </div>
+
+                            <img src="./images/linus-torvald.jpg" style="height: 300px" />
+                        </div>
+                    </section>
+                    <section>
+                        <h1>Décentralisé</h1>
+                        <img src="./images/decentralise.png" style="height: 300px" />
                         <div>
-                            <p class="semantic-sample" style="text-align: left;">
-                                Git a été créé par Linus Torvald (créateur de Linux) en avril 2005 pour proposer une alternative gratuite à BitKeeper.
+                            <p class="semantic-sample" style="text-align: left">
+                                Git est un gestionnaire de version décentralisé. Chaque à contributeur possède donc
+                                localement un dépôt à part entière!
                             </p>
-                            <p class="semantic-sample" style="text-align: left;">
-                                C’est un gestionnaire de version décentralisé. Cette gestion décentralisée lui a valu son succès, notamment auprès de la communauté
-                                du logiciel libre.
-                            </p>
-                            <p class="semantic-sample" style="text-align: left;">
-                                Git a été pensé comme un système de fichier à part entière qui gère lui-même le versionnement de son arborescence (d’après
-                                Linus Torvald).
+                            <p class="semantic-sample" style="text-align: left">
+                                Chaque dépôt est totalement indépendant des autres. Les synchronisations entre dépôts
+                                sont à décider suivant vos méthodes de travail.
                             </p>
                         </div>
-
-                        <img src="./images/linus-torvald.jpg" style="height:300px;" />
-                    </div>
-                </section>
-                <section>
-                    <h1>Décentralisé</h1>
-                    <img src="./images/decentralise.png" style="height:300px;" />
-                    <div>
-                        <p class="semantic-sample" style="text-align: left;">
-                            Git est un gestionnaire de version décentralisé. Chaque à contributeur possède donc localement un dépôt à part entière!
-                        </p>
-                        <p class="semantic-sample" style="text-align: left;">
-                            Chaque dépôt est totalement indépendant des autres. Les synchronisations entre dépôts sont à décider suivant vos méthodes
-                            de travail.
-                        </p>
-                    </div>
-                </section>
-                <section>
-                        <h1>Décentralisé</h1>
-                        <p class="semantic-sample">De manière générale, on travaille avec un dépôt central qui sert de maitre de la donnée. Ce dépôt est traditionellement appelé <i>origin</i>. Chacun des poste client récupére et synchronise ses sources avec <i>origin</i>.</p>
                     </section>
-            </section>
+                    <section>
+                        <h1>Décentralisé</h1>
+                        <p class="semantic-sample">
+                            De manière générale, on travaille avec un dépôt central qui sert de maitre de la donnée. Ce
+                            dépôt est traditionellement appelé <i>origin</i>. Chacun des poste client récupére et
+                            synchronise ses sources avec <i>origin</i>.
+                        </p>
+                    </section>
+                </section>
 
-            <section data-transition="slide" data-background="#4d7e65" data-background-transition="zoom" style="color:white; font-size:24px;">
-                <section>
-                    <h1>La gestion de fichiers</h1>
-                    <p class="semantic-sample">Git indexe les fichiers d'après leur <i>somme de contrôle</i> calculée avec la fonction de hachage <i>SHA-1</i>. Quand
-                        un fichier n'est pas modifié, la somme de contrôle ne change pas et le fichier n'est stocké qu'une
-                        seule fois. En revanche, si le fichier est modifié, les deux versions sont stockées sur le disque.</p>
-                </section>
-                <section>
-                    <img src="./images/file-states.png" style="background-color: white;" />
-                    <blockquote style="width:100%; ">
-                        <ul class="semantic-sample">
-                            <li>Untracked: Le fichier n’est pas indexé, et n’est pas considéré pour le calcul des différences
-                                entre deux révisions
-                            </li>
-                            <li>Stagged: Le fichier fait parti d’un lot prêt à être commité</li>
-                            <li>Unmodified: Le fichier est indexé, mais ne possède aucune différence avec sa version de la révision
-                                précédente
-                            </li>
-                            <li>Modified: Le fichier est indexé, et possède des différences avec sa version dans la révision
-                                précédente
-                            </li>
-                        </ul>
-                    </blockquote>
-                </section>
-                <section>
-                    <h1>Ignorer des fichiers</h1>
-                    <p class="semantic-sample">Il est possible de faire en sorte que des fichiers présents dans votre répertoire soit <i>ignorés</i> par Git. Il suffit de placer les repertoires/fichiers à ignorer dans le <i>.gitignore</i></p>
-                    <pre><code class="txt">
+                <section
+                    data-transition="slide"
+                    data-background="#4d7e65"
+                    data-background-transition="zoom"
+                    style="color: white; font-size: 24px"
+                >
+                    <section>
+                        <h1>La gestion de fichiers</h1>
+                        <p class="semantic-sample">
+                            Git indexe les fichiers d'après leur <i>somme de contrôle</i> calculée avec la fonction de
+                            hachage <i>SHA-1</i>. Quand un fichier n'est pas modifié, la somme de contrôle ne change pas
+                            et le fichier n'est stocké qu'une seule fois. En revanche, si le fichier est modifié, les
+                            deux versions sont stockées sur le disque.
+                        </p>
+                    </section>
+                    <section>
+                        <img src="./images/file-states.png" style="background-color: white" />
+                        <blockquote style="width: 100%">
+                            <ul class="semantic-sample">
+                                <li>
+                                    Untracked: Le fichier n’est pas indexé, et n’est pas considéré pour le calcul des
+                                    différences entre deux révisions
+                                </li>
+                                <li>Stagged: Le fichier fait parti d’un lot prêt à être commité</li>
+                                <li>
+                                    Unmodified: Le fichier est indexé, mais ne possède aucune différence avec sa version
+                                    de la révision précédente
+                                </li>
+                                <li>
+                                    Modified: Le fichier est indexé, et possède des différences avec sa version dans la
+                                    révision précédente
+                                </li>
+                            </ul>
+                        </blockquote>
+                    </section>
+                    <section>
+                        <h1>Ignorer des fichiers</h1>
+                        <p class="semantic-sample">
+                            Il est possible de faire en sorte que des fichiers présents dans votre répertoire soit
+                            <i>ignorés</i> par Git. Il suffit de placer les repertoires/fichiers à ignorer dans le
+                            <i>.gitignore</i>
+                        </p>
+                        <pre><code class="txt">
 lib/
 plugin/
 js/
 css/
 node_modules/
                         </code></pre>
+                    </section>
                 </section>
-            </section>
-            <section style="font-size: 22px; color:white" data-transition="slide" data-background="#7BAFC6" data-background-transition="zoom"
-                style="color:black;">
-                <section>
-                    <h1>L'historique</h1>
-                    <p>L'historique de git est créé comme une chaîne de pointeurs entre les différentes révisions (<strong style="color:red">commits</strong>) du projet</p>
-                </section>
-                <section>
-                    <h1>Le Commit</h1>
-                    <p class="semantic-sample" style="text-align: left; color:white;">
-                        Un commit est une révision du projet. Le <strong style="color:red">snapshot</strong> du projet à l’instant T où le commit a été créé. Il est identifié par son
-                        <strong style="color:red">SHA-1</strong> et contient les informations suivante:
-                    </p>
-                    <ul>
-                        <li>Auteur</li>
-                        <li>Date du commit</li>
-                        <li>Message de commit</li>
-                        <li>Contenu arborescent de la révision</li>
-                        <li>Lien vers le ou les commits parents</li>
-                    </ul>
-                </section>
-                <section>
-                    <h1>Exemple</h1>
-                    <canvas id="concept-historique" style="background: white"></canvas>
-                    <script>
-                        (function() {
-                        var template = getDefautTemplate();
-                        var gitGraph = new GitGraph({ template, orientation: "vertical-reverse", author: "Thibault Ingargiola", elementId: "concept-historique", message: "message exemple" });
+                <section
+                    style="font-size: 22px; color: white"
+                    data-transition="slide"
+                    data-background="#7BAFC6"
+                    data-background-transition="zoom"
+                    style="color: black"
+                >
+                    <section>
+                        <h1>L'historique</h1>
+                        <p>
+                            L'historique de git est créé comme une chaîne de pointeurs entre les différentes révisions
+                            (<strong style="color: red">commits</strong>) du projet
+                        </p>
+                    </section>
+                    <section>
+                        <h1>Le Commit</h1>
+                        <p class="semantic-sample" style="text-align: left; color: white">
+                            Un commit est une révision du projet. Le <strong style="color: red">snapshot</strong> du
+                            projet à l’instant T où le commit a été créé. Il est identifié par son
+                            <strong style="color: red">SHA-1</strong> et contient les informations suivante:
+                        </p>
+                        <ul>
+                            <li>Auteur</li>
+                            <li>Date du commit</li>
+                            <li>Message de commit</li>
+                            <li>Contenu arborescent de la révision</li>
+                            <li>Lien vers le ou les commits parents</li>
+                        </ul>
+                    </section>
+                    <section>
+                        <h1>Exemple</h1>
+                        <canvas id="concept-historique" style="background: white"></canvas>
+                        <script>
+                            (function () {
+                                var template = getDefautTemplate();
+                                var gitGraph = new GitGraph({
+                                    template,
+                                    orientation: "vertical-reverse",
+                                    author: "Michou Dupont",
+                                    elementId: "concept-historique",
+                                    message: "message exemple",
+                                });
 
-                        var master = gitGraph.branch("master").commit("First commit").commit("Update README.txt");
-                        var dev = gitGraph.branch("dev").commit().commit();
-                        var feat1 = dev.branch("feature1").commit();
-                        var feat2 = dev.branch("feature2").commit({ message: "lala" });
-                        feat1.merge(dev);
-                        dev.merge(master,{tag:"V0.0.1"});
-                        dev.commit();
-                        feat2.merge(dev);
-                        dev.merge(master,{tag:"V0.0.2"})
-                        })();
-                    </script>
+                                var master = gitGraph
+                                    .branch("master")
+                                    .commit("First commit")
+                                    .commit("Update README.txt");
+                                var dev = gitGraph.branch("dev").commit().commit();
+                                var feat1 = dev.branch("feature1").commit();
+                                var feat2 = dev.branch("feature2").commit({ message: "lala" });
+                                feat1.merge(dev);
+                                dev.merge(master, { tag: "V0.0.1" });
+                                dev.commit();
+                                feat2.merge(dev);
+                                dev.merge(master, { tag: "V0.0.2" });
+                            })();
+                        </script>
+                    </section>
                 </section>
-            </section>
 
-            <section style="font-size: 22px; color:white;" data-transition="slide" data-background="#C67B9E" data-background-transition="zoom">
-                <section>
-                    <h1>Créer un dépôt Git</h1>
-                </section>
-                <section>
-                    <h1>Git Init</h1>
-                    <pre><code class="bash">git init</code>Transforme le dossier courant en dépôt git.</pre>
-                    <pre><code class="bash">git init __directory__ </code>Transforme le dossier __directory__ en dépôt git.</pre>
-                    <pre><code class="bash">git init [--bare]</code></pre>
-                    <p class="semantic-sample">Un repository
-                        <strong>bare</strong> est un repository dans lequel on ne peut rien commiter directement. On ne peut que synchroniser
-                        avec d'autre dépôt. </p>
-                    <blockquote style="align-self: left; text-align: left">
-                        Note: Si vous faites un git init dans un repertoire en étant déjà un depôt git, rien ne se passe. 
-						Vous n'écraserez pas votre configuration.
-                    </blockquote>
-                </section>
-                <section>
-                    <h1>Git clone</h1>
-                    <p class="semantic-sample">Cette commande vous permez de <strong>cloner un dépôt existant</strong> (distant ou non). Un dossier portant le nom du
-                            projet est créé dans le répertoire courant, et le dépôt est copié dans ce dossier.</p>
-                    <pre><code class="bash">git clone __url__</code></pre>
+                <section
+                    style="font-size: 22px; color: white"
+                    data-transition="slide"
+                    data-background="#C67B9E"
+                    data-background-transition="zoom"
+                >
+                    <section>
+                        <h1>Créer un dépôt Git</h1>
+                    </section>
+                    <section>
+                        <h1>Git Init</h1>
+                        <pre><code class="bash">git init</code>Transforme le dossier courant en dépôt git.</pre>
+                        <pre><code class="bash">git init __directory__ </code>Transforme le dossier __directory__ en dépôt git.</pre>
+                        <pre><code class="bash">git init [--bare]</code></pre>
+                        <p class="semantic-sample">
+                            Un repository <strong>bare</strong> est un repository dans lequel on ne peut rien commiter
+                            directement. On ne peut que synchroniser avec d'autre dépôt.
+                        </p>
+                        <blockquote style="align-self: left; text-align: left">
+                            Note: Si vous faites un git init dans un repertoire en étant déjà un depôt git, rien ne se
+                            passe. Vous n'écraserez pas votre configuration.
+                        </blockquote>
+                    </section>
+                    <section>
+                        <h1>Git clone</h1>
+                        <p class="semantic-sample">
+                            Cette commande vous permez de <strong>cloner un dépôt existant</strong> (distant ou non). Un
+                            dossier portant le nom du projet est créé dans le répertoire courant, et le dépôt est copié
+                            dans ce dossier.
+                        </p>
+                        <pre><code class="bash">git clone __url__</code></pre>
 
-                    <pre><code class="bash">git clone https://github.com/get-focus/formation-git-basic.git</code>Par exemple si vous voulez contribuer à l'amélioration de cette formation, vous pouvez copier le dépôt et commencer à coder =)</pre>
-                </section>
-                <section>
-                    <h1>Git config</h1>
-                    <p>Permet de régler les configurations du compte git. Il est possible de gérer une hiérarchie des configuration:</p>
-                    <ul>
-                        <li>system</li>
-                        <li>global</li>
-                        <li>local</li>
-                    </ul>
-                    <pre><code class="bash">git config --global user.name "Thibault Ingargiola"</code></pre>
-                    <pre><code class="bash">git config user.email "thibault.i@email.com"</code></pre>
-                    <pre><code class="bash">git config --global http.proxy "http://172.20.0.9"</code></pre>
-                </section>
-                <section>
-                    <h1>Les alias</h1>
-                    <p>Il est possible de se créer des alias pour simplifier l'utilisation de certaines commandes complexes</p>
-                    <pre><code class="bash">git config --global alias.ci commit</code></pre>
-                    <pre><code class="bash">git config --global alias.amend git ci --amend</code></pre>
-                    <pre>Ainsi la commande<code class="bash">git amend</code></pre>
-                    <pre>devient équivalente à:<code class="bash">git commit --amend</code></pre>
-                    </ul>
-                </section>
-                <section>
-                    <pre><code class="bash">git config --list
+                        <pre><code class="bash">git clone https://github.com/get-focus/formation-git-basic.git</code>Par exemple si vous voulez contribuer à l'amélioration de cette formation, vous pouvez copier le dépôt et commencer à coder =)</pre>
+                    </section>
+                    <section>
+                        <h1>Git config</h1>
+                        <p>
+                            Permet de régler les configurations du compte git. Il est possible de gérer une hiérarchie
+                            des configuration:
+                        </p>
+                        <ul>
+                            <li>system</li>
+                            <li>global</li>
+                            <li>local</li>
+                        </ul>
+                        <pre><code class="bash">git config --global user.name "Michou Dupont"</code></pre>
+                        <pre><code class="bash">git config user.email "michou.dupont@thc-tools.com"</code></pre>
+                        <pre><code class="bash">git config --global http.proxy "http://172.20.0.9"</code></pre>
+                    </section>
+                    <section>
+                        <h1>Les alias</h1>
+                        <p>
+                            Il est possible de se créer des alias pour simplifier l'utilisation de certaines commandes
+                            complexes
+                        </p>
+                        <pre><code class="bash">git config --global alias.ci commit</code></pre>
+                        <pre><code class="bash">git config --global alias.amend git ci --amend</code></pre>
+                        <pre>Ainsi la commande<code class="bash">git amend</code></pre>
+                        <pre>devient équivalente à:<code class="bash">git commit --amend</code></pre>
+                    </section>
+                    <section>
+                        <pre><code class="bash">git config --list
                         core.symlinks=false
                         core.autocrlf=true
                         core.fscache=true
@@ -310,8 +355,8 @@ node_modules/
                         filter.lfs.required=true
                         filter.lfs.process=git-lfs filter-process
                         credential.helper=manager
-                        user.name=Thibault Ingargiola
-                        user.email=thibaultingargiola@gmail.com
+                        user.name=Michou Dupont
+                        user.email=michou.dupont@thc-tools.com
                         alias.cb=checkout
                         credential.helper=wincred
                         url.https://.insteadof=git://
@@ -326,379 +371,722 @@ node_modules/
                         branch.master.remote=origin
                         branch.master.merge=refs/heads/master
                         </code></pre>
-                </section>
-            </section>
-
-            <section style="font-size: 22px; color:white" data-transition="slide" data-background-transition="zoom">
-                <section>
-                    <h1>Modifier des éléments</h1>
-                </section>
-                <section>
-                    <h1>Git add</h1>
-                    <p class="semantic-sample">Cette fonction sert à passer <i>des nouveaux fichiers, ou des fichiers modifiés</i> à l'état
-                        <i>staged</i> afin qu'ils puissent <i>par la suite être commités</i>.</p>
-                    <pre><code class="bash">git add __file__</code></pre>
-                    <pre><code class="bash">git add __directory__</code></pre>
-                    <pre><code class="bash">git add ./src/*.js</code></pre>
-                    <blockquote>
-                        <p>La phase de stagging est une particularité propre à Git. Ce buffer entre la phase de travail, et
-                            la phase d'historisation permet de morceler notre historique afin de rendre les commits les plus
-                            atomiques possible.</p>
-                    </blockquote>
-                </section>
-                <section>
-                    <h1>Git commit</h1>
-                    <p class="semantic-sample">Cette commande <i>sauvegarde l'ensemble des modifications</i> dans l'état
-                        <i>staged</i> et l'ajoute à l'historique du projet.</p>
-                    <pre><code class="bash">git commit -m "__message_de_commit__"</code></pre>
-                    <p class="semantic-sample">Une fois nos modifications commitées, <i>Git ne les oubliera jamais</i>. Il est bien sur possible de modifier
-                        l'historique, mais là encore il existe des possibilités pour retrouver nos modifications.</p>
-                    <blockquote>
-                        <p>Attention! Ceci n'a rien à voir avec la fonction commit de SVN. Ici l'historisation n'est faite que
-                            sur votre depôt local. La synchronisation avec un serveur central se fait séparément.</p>
-                    </blockquote>
+                    </section>
                 </section>
 
-            </section>
-            <section style="font-size: 22px; color:white" data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
-                <section>
-                    <h1>Revenir en arrière</h1>
+                <section
+                    style="font-size: 22px; color: white"
+                    data-transition="slide"
+                    data-background-transition="zoom"
+                >
+                    <section>
+                        <h1>Modifier des éléments</h1>
+                    </section>
+                    <section>
+                        <h1>Git add</h1>
+                        <p class="semantic-sample">
+                            Cette fonction sert à passer <i>des nouveaux fichiers, ou des fichiers modifiés</i> à l'état
+                            <i>staged</i> afin qu'ils puissent <i>par la suite être commités</i>.
+                        </p>
+                        <pre><code class="bash">git add __file__</code></pre>
+                        <pre><code class="bash">git add __directory__</code></pre>
+                        <pre><code class="bash">git add ./src/*.js</code></pre>
+                        <blockquote>
+                            <p>
+                                La phase de stagging est une particularité propre à Git. Ce buffer entre la phase de
+                                travail, et la phase d'historisation permet de morceler notre historique afin de rendre
+                                les commits les plus atomiques possible.
+                            </p>
+                        </blockquote>
+                    </section>
+                    <section>
+                        <h1>Git commit</h1>
+                        <p class="semantic-sample">
+                            Cette commande <i>sauvegarde l'ensemble des modifications</i> dans l'état <i>staged</i> et
+                            l'ajoute à l'historique du projet.
+                        </p>
+                        <pre><code class="bash">git commit -m "__message_de_commit__"</code></pre>
+                        <p class="semantic-sample">
+                            Une fois nos modifications commitées, <i>Git ne les oubliera jamais</i>. Il est bien sur
+                            possible de modifier l'historique, mais là encore il existe des possibilités pour retrouver
+                            nos modifications.
+                        </p>
+                        <blockquote>
+                            <p>
+                                Attention! Ceci n'a rien à voir avec la fonction commit de SVN. Ici l'historisation
+                                n'est faite que sur votre depôt local. La synchronisation avec un serveur central se
+                                fait séparément.
+                            </p>
+                        </blockquote>
+                    </section>
                 </section>
-                <section>
-                    <h1>Git commit --amend</h1>
-                    <pre><code class="bash">git commit --amend</code>Apporte les nouvelles modifications à l'ancien commit.</pre>
-                    <div>
-                        <canvas id="before-amend" style="background: white"></canvas>
-                        <pre><code class="bash">git commit --amend -m "Update README.txt"</code>Applique les modification à l'ancien commit, et change le message de commit en <i>"Update README.txt"</i>.</pre>
-                        <canvas id="after-amend" style="background: white"></canvas>
+                <section
+                    style="font-size: 22px; color: white"
+                    data-transition="slide"
+                    data-background="#4d7e65"
+                    data-background-transition="zoom"
+                >
+                    <section>
+                        <h1>Revenir en arrière</h1>
+                    </section>
+                    <section>
+                        <h1>Git commit --amend</h1>
+                        <pre><code class="bash">git commit --amend</code>Apporte les nouvelles modifications à l'ancien commit.</pre>
+                        <div>
+                            <canvas id="before-amend" style="background: white"></canvas>
+                            <pre><code class="bash">git commit --amend -m "Update README.txt"</code>Applique les modification à l'ancien commit, et change le message de commit en <i>"Update README.txt"</i>.</pre>
+                            <canvas id="after-amend" style="background: white"></canvas>
 
-                        <blockquote>Attention: on modifie l'historique en faisant cela. Le --amend n'est utilisé que lorsque les modifications ne sont pas synchronisées avec le serveur.</blockquote>
-                    </div>
-                    <script>
-                        (function() {
-                        var template = getDefautTemplate();
-                        template.commit.message.displayBranch = false;
-                        var gitGraphBefore = new GitGraph({ template, orientation: "vertical-reverse", author: "Thibault Ingargiola", elementId: "before-amend" });
-                        var gitGraphAfter = new GitGraph({ template, orientation: "vertical-reverse", author: "Thibault Ingargiola", elementId: "after-amend" });
-                        var master = gitGraphBefore.branch("master").commit({ message: "First commit", sha1: "6b2488" }).commit({ message: "Update README.text", sha1: "42eb2a" });
-                        var master = gitGraphAfter.branch("master").commit({ message: "First commit", sha1: "6b2488" }).commit({ message: "Update README.txt", sha1: "aebf67", dotColor: "red", messageColor: "red" });
-                        })();
-                    </script>
-                </section>
-                <section>
-                    <h1>Git reset</h1>
-                    <p class="semantic-sample">Vous permez de <i>revenir à l'état de n'importe quel commit</i>. <i>Efface les liens</i> des commits concernés.</p>
-                    <pre><code class="bash">git reset HEAD^</code>Revient au commit précédent. En gardant l'ensemble des modifications dans l'état <i>modified</i></pre>
-                    <pre><code class="bash">git reset HEAD~3 --hard</code>Revient trois commits en arrière en effaçant l'ensemble des modifications.</pre>
-                    <pre><code class="bash">git reset origin/master --hard</code>Revient à l'état dans lequel est la branche sur le dépôt origin.</pre>
-                </section>
-                <section>
+                            <blockquote>
+                                Attention: on modifie l'historique en faisant cela. Le --amend n'est utilisé que lorsque
+                                les modifications ne sont pas synchronisées avec le serveur.
+                            </blockquote>
+                        </div>
+                        <script>
+                            (function () {
+                                var template = getDefautTemplate();
+                                template.commit.message.displayBranch = false;
+                                var gitGraphBefore = new GitGraph({
+                                    template,
+                                    orientation: "vertical-reverse",
+                                    author: "Michou Dupont",
+                                    elementId: "before-amend",
+                                });
+                                var gitGraphAfter = new GitGraph({
+                                    template,
+                                    orientation: "vertical-reverse",
+                                    author: "Michou Dupont",
+                                    elementId: "after-amend",
+                                });
+                                var master = gitGraphBefore
+                                    .branch("master")
+                                    .commit({ message: "First commit", sha1: "6b2488" })
+                                    .commit({ message: "Update README.text", sha1: "42eb2a" });
+                                var master = gitGraphAfter
+                                    .branch("master")
+                                    .commit({ message: "First commit", sha1: "6b2488" })
+                                    .commit({
+                                        message: "Update README.txt",
+                                        sha1: "aebf67",
+                                        dotColor: "red",
+                                        messageColor: "red",
+                                    });
+                            })();
+                        </script>
+                    </section>
+                    <section>
+                        <h1>Git reset</h1>
+                        <p class="semantic-sample">
+                            Vous permez de <i>revenir à l'état de n'importe quel commit</i>. <i>Efface les liens</i> des
+                            commits concernés.
+                        </p>
+                        <pre><code class="bash">git reset HEAD^</code>Revient au commit précédent. En gardant l'ensemble des modifications dans l'état <i>modified</i></pre>
+                        <pre><code class="bash">git reset HEAD~3 --hard</code>Revient trois commits en arrière en effaçant l'ensemble des modifications.</pre>
+                        <pre><code class="bash">git reset origin/master --hard</code>Revient à l'état dans lequel est la branche sur le dépôt origin.</pre>
+                    </section>
+                    <section>
                         <h1>Le HEAD</h1>
-                        <p class="semantic-sample">Il s'agit de <i>votre emplacement</i> actuel dans <i>l'arbre d'historique</i></p>
+                        <p class="semantic-sample">
+                            Il s'agit de <i>votre emplacement</i> actuel dans <i>l'arbre d'historique</i>
+                        </p>
                         <div>
                             <canvas id="head" style="background: white"></canvas>
                         </div>
-                        <blockquote><p>C'est un tag particulier qui pointe vers le commit. On retrouvera cette notion pour les branches</p></blockquote>
+                        <blockquote>
+                            <p>
+                                C'est un tag particulier qui pointe vers le commit. On retrouvera cette notion pour les
+                                branches
+                            </p>
+                        </blockquote>
                         <script>
                             var template = getDefautTemplate();
                             template.commit.message.displayBranch = false;
-                            var gitGraphead = new GitGraph({ template, orientation: "vertical-reverse", author: "Thibault Ingargiola", elementId: "head" });
-                            var master = gitGraphead.branch("master").commit({ message: "First commit", sha1: "6b2488" }).commit({ message: "HEAD^", sha1: "42eb2a",tag:"HEAD~2" }).commit({ message: "Lala commit", sha1: "56fb6a", tag:"HEAD^" }).commit({sha1:"346791",message:"Last commit", dotColor: "red", messageColor: "red", tag:"HEAD"});
+                            var gitGraphead = new GitGraph({
+                                template,
+                                orientation: "vertical-reverse",
+                                author: "Michou Dupont",
+                                elementId: "head",
+                            });
+                            var master = gitGraphead
+                                .branch("master")
+                                .commit({ message: "First commit", sha1: "6b2488" })
+                                .commit({ message: "HEAD^", sha1: "42eb2a", tag: "HEAD~2" })
+                                .commit({ message: "Lala commit", sha1: "56fb6a", tag: "HEAD^" })
+                                .commit({
+                                    sha1: "346791",
+                                    message: "Last commit",
+                                    dotColor: "red",
+                                    messageColor: "red",
+                                    tag: "HEAD",
+                                });
                         </script>
                     </section>
-            </section>
-            <section style="font-size: 22px; color:white" data-transition="slide" data-background="#C67B9E" data-background-transition="zoom">
-                <section>
-                    <h1>Les Branches</h1>
-                    <p class="semantic-sample">Il s'agit de <strong style="color: orange">la grande puissance de Git!</strong> Rendre les branches plus facile d'utilisation pour s'adapter à n'importe quelle méthode de travail.</p>
                 </section>
-                <section>
-                    <h1>Git branch</h1>
-                    <p class="semantic-sample">Pour Git, une <strong style="color: orange">branche</strong> n'est qu'<strong style="color: orange">une chaîne de commit</strong> pointant chacun sur son parent!</p>
-                    <pre><code class="bash">git branch ma-nouvelle-feature</code>Crée une nouvelle branche appelée <i>ma-nouvelle-feature</i></pre>
-                    <p class="semantic-sample">Une branche est représentée dans Git par <strong style="color: orange">un tag pointant vers le dernier commit</strong> de la branch.</p>
-                    <div>
-                        <canvas id="branch" style="background: white; height: 280px !important;" height="320"></canvas>
-                    </div>
-                    <blockquote id="branch-note" style="margin-top: 0" hidden><p>Les deux branches peuvent maintenant évoluer indépendament l'une de l'autre.</p></blockquote>
-                    <script>
-                        (function() {
-                        var template = getDefautTemplate();
-                        template.commit.message.displayBranch = false;
-                        var gitGraphBranch = new GitGraph({ template, orientation: "vertical-reverse", author: "Thibault Ingargiola", elementId: "branch" });
-                        gitGraphBranch.canvas.addEventListener( "commit:mouseover", function ( event ) {
-                        this.style.cursor = "pointer";
-                        } );
-
-                        gitGraphBranch.canvas.addEventListener("commit:mouseout", function (event) {
-                        this.style.cursor = "auto";
-                        });
-                        var master = gitGraphBranch.branch("master").commit({ message: "First commit", sha1: "6b2488" }).commit({ message: "Second commit", sha1: "42eb2a"}).commit({sha1:"346791",message:"Create a new branch here", dotColor: "red", messageColor: "red", tag:"master", onClick:function(commit){
-                            commit.dotColor = null;
-                            commit.messageColor = null;
-                            commit.tag = null;
-                            commit.onClick = null;
-                            var feat = gitGraphBranch.branch("ma-nouvelle-feature").commit().commit({tag:"ma-nouvelle-feature"});
-                            master.commit({tag:"master"});
-                            document.getElementById("branch-note").removeAttribute("hidden");
-                        }});
-                    })();
-                    </script>
-                </section>
-                <section>
-                    <h1>Git checkout</h1>
-                    <p class="semantic-sample">Cette commande sert à <strong style="color: orange">naviguer</strong> (déplacer le HEAD) dans l'arbre d'historique. De cette manière, vous <strong style="color: orange">remplacez votre arborescence de fichier</strong> par celle en l'état au moment du commit choisi.</p>
-                    <pre><code class="bash">git checkout 6b2488</code></pre>
-                    <pre><code class="bash">git checkout master</code></pre>
-                    <blockquote><p>Vous pouvez identifier un commit juste avec le début de son SHA-1. S'il n'y a pas d'ambiguïté, Git comprendra naturellement de quel commit il s'agit.</p></blockquote>
-                </section>
-                <section>
-                    <h1>Git stash</h1>
-                    <p class="semantic-sample">Le stash est utile pour <strong style="color: orange">stocker temporairement</strong> des modifications.</p>
-                    <pre><code class="bash">git stash</code>Prend l'ensemble de vos modifications en attente, et les place dans le stash.</pre>
-                    <pre><code class="bash">git stash pop</code>Vide le stash, et applique les modifications qu'il contenait.</pre>
-                    <pre><code class="bash">git stash drop</code>Vide le stash sans appliquer les modifications.</pre>
-
-                    <blockquote><p>Si vous avez des modifications en cours que vous ne voulez pas commiter, mais que vous voulez tout de même mettre à jour votre branche avec le serveur, le stash est la solution ;)</p></blockquote>
-                </section>
-            </section>
-
-            <section style="font-size: 22px; color:white" data-transition="slide" data-background="#7BAFC6" data-background-transition="zoom">
-                <section>
-                    <h1>Synchronisation</h1>
-                </section>
-                <section>
-                    <h1>Git pull</h1>
-                    <p class="semantic-sample">Cette commande sert à récupérer les commit sur <i style="color:red">origin</i> pour mettre à jour notre dépôt local</p>
-                    <pre><code class="bash">git pull</code>Récupère et merge les commits de la branche serveur correspondant à notre branche locale.</pre>
-                    <pre><code class="bash">git pull origin master</code>Récupère et fusionne les commit de la branche master sur origin à notre branche locale.</pre>
-
-                    <blockquote ><p class="semantic-sample">La commande <i style="color:red">git pull</i> est une contraction des deux commande <i style="color:red">git fetch</i> et <i style="color:red">git merge</i>. Dans la plupart des cas (et aussi pour éviter des commit de merge inutiles) on préfèrera utiliser la commande suivante:</p>
-                        <pre><code class="bash">git pull --rebase</code></pre>
-                        <pre><code class="bash">git config --global pull.rebase true</code>Tous vos pull seront des pull --rebase ;)</pre>
-                    </blockquote>
-                </section>
-                <section>
-                    <h1>Git push</h1>
-                    <p class="semantic-sample">Cette commande sert à <i style="color:red">pousser nos modifications locales</i> sur une branche serveur</p>
-                    <pre><code class="bash">git push</code>Pousse les commits locaux sur la branche serveur configurée pour notre branche locale</pre>
-                    <pre><code class="bash">git push origin master</code>Pousse les commits locaux sur la branche master sur le dépôt origin</pre>
-                    <blockquote><p class="semantic-sample">Si vous avez des modifications en attente, ou si vous n'êtes pas à jour avec le serveur, Git refusera de pusher!</p></blockquote>
-                </section>
-                <section>
-                    <h1>Git merge</h1>
-                    <p class="semantic-sample"><i style="color:red">Fusionne</i> les modifications d'une branche sur une autre</p>
-                    <pre><code class="bash">git merge ma-nouvelle-feature</code>Merge la branche <i>ma-nouvelle-feature</i> sur la branche courante</pre>
-                    <div>
-                        <canvas id="merge" style="background: white; height: 280px !important;" height="320"></canvas>
-                    </div>
-                        <script>
-                            (function() {
-                            var template = getDefautTemplate();
-                            template.commit.message.displayBranch = false;
-                            var gitGraphMerge = new GitGraph({ template, orientation: "vertical-reverse", author: "Thibault Ingargiola", elementId: "merge" });
-                            gitGraphMerge.canvas.addEventListener( "commit:mouseover", function ( event ) {
-                            this.style.cursor = "pointer";
-                            } );
-
-                            gitGraphMerge.canvas.addEventListener("commit:mouseout", function (event) {
-                            this.style.cursor = "auto";
-                            });
-                            var masterMerge = gitGraphMerge.branch("master").commit({ message: "First commit", sha1: "6b2488" }).commit({ message: "Second commit", sha1: "42eb2a"}).commit({tsha1:"346791",message:"Create a new branch here"});
-                            var featMerge = gitGraphMerge.branch("ma-nouvelle-feature").commit().commit({message:"pret à merger!", tag:"ma-nouvelle-feature"});
-                            masterMerge.commit({tag:"master",dotColor: "red", messageColor: "red", onClick:function(commit){
-                                commit.dotColor = template.colors[0];
-                                commit.messageColor = null;
-                                commit.onClick = null;
-                                commit.tag = null;
-                                featMerge.merge(masterMerge,{tag:"master"});
-                            }});
-                        })();
-                        </script>
-                </section>
-                <section>
-                    <h1>Git rebase</h1>
-                    <p class="semantic-sample"><i style="color:red">Ré-applique les commits</i> sur le commit sélectionné</p>
-                    <pre><code class="bash">git rebase master</code>Rebase la branche courante sur master</pre>
-                    <div>
-                            <canvas id="rebase" style="background: white; height: 280px !important;" height="320"></canvas>
-                            <canvas id="rebased" hidden style="background: white; height: 280px !important;" height="320"></canvas>
-                            <blockquote><p>Attention, on réécrit l'historique. Donc les <i style="color:red">SHA-1</i> des commits changent</p></blockquote>
+                <section
+                    style="font-size: 22px; color: white"
+                    data-transition="slide"
+                    data-background="#C67B9E"
+                    data-background-transition="zoom"
+                >
+                    <section>
+                        <h1>Les Branches</h1>
+                        <p class="semantic-sample">
+                            Il s'agit de <strong style="color: orange">la grande puissance de Git!</strong> Rendre les
+                            branches plus facile d'utilisation pour s'adapter à n'importe quelle méthode de travail.
+                        </p>
+                    </section>
+                    <section>
+                        <h1>Git branch</h1>
+                        <p class="semantic-sample">
+                            Pour Git, une <strong style="color: orange">branche</strong> n'est qu'<strong
+                                style="color: orange"
+                                >une chaîne de commit</strong
+                            >
+                            pointant chacun sur son parent!
+                        </p>
+                        <pre><code class="bash">git branch ma-nouvelle-feature</code>Crée une nouvelle branche appelée <i>ma-nouvelle-feature</i></pre>
+                        <p class="semantic-sample">
+                            Une branche est représentée dans Git par
+                            <strong style="color: orange">un tag pointant vers le dernier commit</strong> de la branch.
+                        </p>
+                        <div>
+                            <canvas
+                                id="branch"
+                                style="background: white; height: 280px !important"
+                                height="320"
+                            ></canvas>
                         </div>
-                            <script>
-                                (function() {
+                        <blockquote id="branch-note" style="margin-top: 0" hidden>
+                            <p>Les deux branches peuvent maintenant évoluer indépendament l'une de l'autre.</p>
+                        </blockquote>
+                        <script>
+                            (function () {
                                 var template = getDefautTemplate();
                                 template.commit.message.displayBranch = false;
-                                var gitGraphRebase = new GitGraph({ template, orientation: "vertical-reverse", author: "Thibault Ingargiola", elementId: "rebase" });
-                                gitGraphRebase.canvas.addEventListener( "commit:mouseover", function ( event ) {
-                                this.style.cursor = "pointer";
-                                } );
+                                var gitGraphBranch = new GitGraph({
+                                    template,
+                                    orientation: "vertical-reverse",
+                                    author: "Michou Dupont",
+                                    elementId: "branch",
+                                });
+                                gitGraphBranch.canvas.addEventListener("commit:mouseover", function (event) {
+                                    this.style.cursor = "pointer";
+                                });
+
+                                gitGraphBranch.canvas.addEventListener("commit:mouseout", function (event) {
+                                    this.style.cursor = "auto";
+                                });
+                                var master = gitGraphBranch
+                                    .branch("master")
+                                    .commit({ message: "First commit", sha1: "6b2488" })
+                                    .commit({ message: "Second commit", sha1: "42eb2a" })
+                                    .commit({
+                                        sha1: "346791",
+                                        message: "Create a new branch here",
+                                        dotColor: "red",
+                                        messageColor: "red",
+                                        tag: "master",
+                                        onClick: function (commit) {
+                                            commit.dotColor = null;
+                                            commit.messageColor = null;
+                                            commit.tag = null;
+                                            commit.onClick = null;
+                                            var feat = gitGraphBranch
+                                                .branch("ma-nouvelle-feature")
+                                                .commit()
+                                                .commit({ tag: "ma-nouvelle-feature" });
+                                            master.commit({ tag: "master" });
+                                            document.getElementById("branch-note").removeAttribute("hidden");
+                                        },
+                                    });
+                            })();
+                        </script>
+                    </section>
+                    <section>
+                        <h1>Git checkout</h1>
+                        <p class="semantic-sample">
+                            Cette commande sert à <strong style="color: orange">naviguer</strong> (déplacer le HEAD)
+                            dans l'arbre d'historique. De cette manière, vous
+                            <strong style="color: orange">remplacez votre arborescence de fichier</strong> par celle en
+                            l'état au moment du commit choisi.
+                        </p>
+                        <pre><code class="bash">git checkout 6b2488</code></pre>
+                        <pre><code class="bash">git checkout master</code></pre>
+                        <blockquote>
+                            <p>
+                                Vous pouvez identifier un commit juste avec le début de son SHA-1. S'il n'y a pas
+                                d'ambiguïté, Git comprendra naturellement de quel commit il s'agit.
+                            </p>
+                        </blockquote>
+                    </section>
+                    <section>
+                        <h1>Git stash</h1>
+                        <p class="semantic-sample">
+                            Le stash est utile pour <strong style="color: orange">stocker temporairement</strong> des
+                            modifications.
+                        </p>
+                        <pre><code class="bash">git stash</code>Prend l'ensemble de vos modifications en attente, et les place dans le stash.</pre>
+                        <pre><code class="bash">git stash pop</code>Vide le stash, et applique les modifications qu'il contenait.</pre>
+                        <pre><code class="bash">git stash drop</code>Vide le stash sans appliquer les modifications.</pre>
+
+                        <blockquote>
+                            <p>
+                                Si vous avez des modifications en cours que vous ne voulez pas commiter, mais que vous
+                                voulez tout de même mettre à jour votre branche avec le serveur, le stash est la
+                                solution ;)
+                            </p>
+                        </blockquote>
+                    </section>
+                </section>
+
+                <section
+                    style="font-size: 22px; color: white"
+                    data-transition="slide"
+                    data-background="#7BAFC6"
+                    data-background-transition="zoom"
+                >
+                    <section>
+                        <h1>Synchronisation</h1>
+                    </section>
+                    <section>
+                        <h1>Git pull</h1>
+                        <p class="semantic-sample">
+                            Cette commande sert à récupérer les commit sur <i style="color: red">origin</i> pour mettre
+                            à jour notre dépôt local
+                        </p>
+                        <pre><code class="bash">git pull</code>Récupère et merge les commits de la branche serveur correspondant à notre branche locale.</pre>
+                        <pre><code class="bash">git pull origin master</code>Récupère et fusionne les commit de la branche master sur origin à notre branche locale.</pre>
+
+                        <blockquote>
+                            <p class="semantic-sample">
+                                La commande <i style="color: red">git pull</i> est une contraction des deux commande
+                                <i style="color: red">git fetch</i> et <i style="color: red">git merge</i>. Dans la
+                                plupart des cas (et aussi pour éviter des commit de merge inutiles) on préfèrera
+                                utiliser la commande suivante:
+                            </p>
+                            <pre><code class="bash">git pull --rebase</code></pre>
+                            <pre><code class="bash">git config --global pull.rebase true</code>Tous vos pull seront des pull --rebase ;)</pre>
+                        </blockquote>
+                    </section>
+                    <section>
+                        <h1>Git push</h1>
+                        <p class="semantic-sample">
+                            Cette commande sert à <i style="color: red">pousser nos modifications locales</i> sur une
+                            branche serveur
+                        </p>
+                        <pre><code class="bash">git push</code>Pousse les commits locaux sur la branche serveur configurée pour notre branche locale</pre>
+                        <pre><code class="bash">git push origin master</code>Pousse les commits locaux sur la branche master sur le dépôt origin</pre>
+                        <blockquote>
+                            <p class="semantic-sample">
+                                Si vous avez des modifications en attente, ou si vous n'êtes pas à jour avec le serveur,
+                                Git refusera de pusher!
+                            </p>
+                        </blockquote>
+                    </section>
+                    <section>
+                        <h1>Git merge</h1>
+                        <p class="semantic-sample">
+                            <i style="color: red">Fusionne</i> les modifications d'une branche sur une autre
+                        </p>
+                        <pre><code class="bash">git merge ma-nouvelle-feature</code>Merge la branche <i>ma-nouvelle-feature</i> sur la branche courante</pre>
+                        <div>
+                            <canvas
+                                id="merge"
+                                style="background: white; height: 280px !important"
+                                height="320"
+                            ></canvas>
+                        </div>
+                        <script>
+                            (function () {
+                                var template = getDefautTemplate();
+                                template.commit.message.displayBranch = false;
+                                var gitGraphMerge = new GitGraph({
+                                    template,
+                                    orientation: "vertical-reverse",
+                                    author: "Michou Dupont",
+                                    elementId: "merge",
+                                });
+                                gitGraphMerge.canvas.addEventListener("commit:mouseover", function (event) {
+                                    this.style.cursor = "pointer";
+                                });
+
+                                gitGraphMerge.canvas.addEventListener("commit:mouseout", function (event) {
+                                    this.style.cursor = "auto";
+                                });
+                                var masterMerge = gitGraphMerge
+                                    .branch("master")
+                                    .commit({ message: "First commit", sha1: "6b2488" })
+                                    .commit({ message: "Second commit", sha1: "42eb2a" })
+                                    .commit({ tsha1: "346791", message: "Create a new branch here" });
+                                var featMerge = gitGraphMerge
+                                    .branch("ma-nouvelle-feature")
+                                    .commit()
+                                    .commit({ message: "pret à merger!", tag: "ma-nouvelle-feature" });
+                                masterMerge.commit({
+                                    tag: "master",
+                                    dotColor: "red",
+                                    messageColor: "red",
+                                    onClick: function (commit) {
+                                        commit.dotColor = template.colors[0];
+                                        commit.messageColor = null;
+                                        commit.onClick = null;
+                                        commit.tag = null;
+                                        featMerge.merge(masterMerge, { tag: "master" });
+                                    },
+                                });
+                            })();
+                        </script>
+                    </section>
+                    <section>
+                        <h1>Git rebase</h1>
+                        <p class="semantic-sample">
+                            <i style="color: red">Ré-applique les commits</i> sur le commit sélectionné
+                        </p>
+                        <pre><code class="bash">git rebase master</code>Rebase la branche courante sur master</pre>
+                        <div>
+                            <canvas
+                                id="rebase"
+                                style="background: white; height: 280px !important"
+                                height="320"
+                            ></canvas>
+                            <canvas
+                                id="rebased"
+                                hidden
+                                style="background: white; height: 280px !important"
+                                height="320"
+                            ></canvas>
+                            <blockquote>
+                                <p>
+                                    Attention, on réécrit l'historique. Donc les <i style="color: red">SHA-1</i> des
+                                    commits changent
+                                </p>
+                            </blockquote>
+                        </div>
+                        <script>
+                            (function () {
+                                var template = getDefautTemplate();
+                                template.commit.message.displayBranch = false;
+                                var gitGraphRebase = new GitGraph({
+                                    template,
+                                    orientation: "vertical-reverse",
+                                    author: "Michou Dupont",
+                                    elementId: "rebase",
+                                });
+                                gitGraphRebase.canvas.addEventListener("commit:mouseover", function (event) {
+                                    this.style.cursor = "pointer";
+                                });
 
                                 gitGraphRebase.canvas.addEventListener("commit:mouseout", function (event) {
-                                this.style.cursor = "auto";
+                                    this.style.cursor = "auto";
                                 });
-                                var master = gitGraphRebase.branch("master").commit({ message: "First commit", sha1: "6b2488" }).commit({ message: "Second commit", sha1: "42eb2a"}).commit({sha1:"346791",message:"Create a new branch here"});
-                                var featRebase = gitGraphRebase.branch("ma-nouvelle-feature").commit().commit({message:"pret à rebase!", tag:"ma-nouvelle-feature",dotColor:"red", onClick:function(commit){
-                                    commit.onClick = null;
-                                    document.getElementById("rebase").setAttribute("hidden",null);
-                                    document.getElementById("rebase").removeAttribute("hidden");
-                                    var gitGraphRebased = new GitGraph({ template, orientation: "vertical-reverse", author: "Thibault Ingargiola", elementId: "rebase" });
-                                    var master = gitGraphRebased.branch("master").commit({ message: "First commit", sha1: "6b2488" }).commit({ message: "Second commit", sha1: "42eb2a"}).commit({sha1:"346791",message:"Create a new branch here"});
-                                    master.commit({tag:"master",sha1:"029bdd", dotColor:"green", messageColor:"green"});
-                                    master.checkout();
-                                    gitGraphRebased.branch("ma-nouvelle-feature").commit().commit({message:"pret à rebase!", tag:"ma-nouvelle-feature"});
-                                }});
-                                master.commit({tag:"master",sha1:"029bdd", dotColor:"green", messageColor:"green"});
+                                var master = gitGraphRebase
+                                    .branch("master")
+                                    .commit({ message: "First commit", sha1: "6b2488" })
+                                    .commit({ message: "Second commit", sha1: "42eb2a" })
+                                    .commit({ sha1: "346791", message: "Create a new branch here" });
+                                var featRebase = gitGraphRebase
+                                    .branch("ma-nouvelle-feature")
+                                    .commit()
+                                    .commit({
+                                        message: "pret à rebase!",
+                                        tag: "ma-nouvelle-feature",
+                                        dotColor: "red",
+                                        onClick: function (commit) {
+                                            commit.onClick = null;
+                                            document.getElementById("rebase").setAttribute("hidden", null);
+                                            document.getElementById("rebase").removeAttribute("hidden");
+                                            var gitGraphRebased = new GitGraph({
+                                                template,
+                                                orientation: "vertical-reverse",
+                                                author: "Michou Dupont",
+                                                elementId: "rebase",
+                                            });
+                                            var master = gitGraphRebased
+                                                .branch("master")
+                                                .commit({ message: "First commit", sha1: "6b2488" })
+                                                .commit({ message: "Second commit", sha1: "42eb2a" })
+                                                .commit({ sha1: "346791", message: "Create a new branch here" });
+                                            master.commit({
+                                                tag: "master",
+                                                sha1: "029bdd",
+                                                dotColor: "green",
+                                                messageColor: "green",
+                                            });
+                                            master.checkout();
+                                            gitGraphRebased
+                                                .branch("ma-nouvelle-feature")
+                                                .commit()
+                                                .commit({ message: "pret à rebase!", tag: "ma-nouvelle-feature" });
+                                        },
+                                    });
+                                master.commit({
+                                    tag: "master",
+                                    sha1: "029bdd",
+                                    dotColor: "green",
+                                    messageColor: "green",
+                                });
                             })();
-                            </script>
-                </section>
-            </section>
-
-            <section style="font-size: 22px; color:white" data-transition="slide" data-background-transition="zoom">
-                <section>
-                    <h1>Git au quotidien</h1>
-                </section>
-                <section>
-                    <h1>Les logiciels de dépôt</h1>
-                    <p class="semantic-sample">Ils permettent de gérer efficacement un dépôt. <i>Sécuriser</i> certaine branches, mettre en place des <i>builds automatiques</i>, des <i>workflows</i> particuliers...</p>
-                    <div style="display: flex; justify-content: space-around">
-                        <img src="images/gitlab-logo.svg" style="width: 300px;padding:15px; background: white;" alt="">
-                        <img src="images/TFS-logo.png" style="padding:15px; background: white;"alt="">
-                    </div>
-                </section>
-                <section>
-                    <h1>Les clients graphiques</h1>
-                    <p class="semantic-sample">Indispensable à une <i>utilisation</i> efficaces de Git. On evite les erreurs, on comprend et donc <i>maîtrise ce que l'on fait</i>.</p>
-                    <img src="images/TortoiseGit_logo.svg" style="width: 300px;padding:15px; background: white;" alt="">
-                    <div><a href="https://tortoisegit.org/">Site web</a></div>
-                </section>
-            </section>
-            <section style="font-size: 22px; color:white" data-transition="slide" data-background="#4d7e65" data-background-transition="zoom">
-                <section>
-                    <h1>Workflows</h1>
-                    <p class="semantic-sample">Pour une <i>organisation du travail</i> efficace et qualitative!</p>
-                </section>
-                <section>
-                    <h1>Workflow centralisé</h1>
-                    <p class="semantic-sample"><i>Flow mono-branche</i>. Seule la master est présente, chaque personne doit pusher des versions stables de l'application.</p>
-                    <p class="semantic-sample">Flow le plus utilisé à l'heure actuelle chez Klee. <i>Simple, léger, efficace</i>. Pas de garde fou ni de modularité.</p>
-
-                    <canvas id="central-flow" style="background: white; height: 280px !important;" height="320"></canvas>
-                    <script>
-                        (function() {
-                        var template = getDefautTemplate();
-                        template.commit.message.displayBranch = false;
-                        var gitGraph = new GitGraph({ template, orientation: "horizontal", author: "Thibault Ingargiola", elementId: "central-flow" });
-
-                        var master = gitGraph.branch("master").commit({ message: "First commit", sha1: "6b2488" }).commit({ message: "Second commit", sha1: "42eb2a"}).commit({sha1:"346791",message:"Create a new branch here"});
-                        master.commit({sha1:"029bdd",tag:"origin/master"}).commit({dotColor:"purple"}).commit({dotColor:"purple"}).commit({dotColor:"purple",tag:"local/master"});
-                    })();
-                    </script>
-                </section>
-                <section>
-                    <h1>Les étapes de flow centralisé</h1>
-                    <ol>
-                        <li class="semantic-sample">Je code sur mon <i>dépôt local</i></li>
-                        <li class="semantic-sample">Je me synchronise avec <i>origin</i> (pull --rebase)</li>
-                        <li class="semantic-sample">Je <i>push</i></li>
-                    </ol>
-                </section>
-                <section>
-                    <h1>Feature branching</h1>
-                    <p class="semantic-sample"><i>Flow multi-branches</i>. Une branche principale servant à l'integration des fonctionnalités (souvent appelée <i>develop</i>). Puis <i>une branche par fonctionnalité</i> basée sur <i>develop</i>.</p>
-                    <p class="semantic-sample">L'idée de ce flow est de séparer les concepts métiers en <i>story</i> utilisateurs. Il permet une plus grande modularité et une meilleure maîtrise dans la façon de travailler.</p>
-                    <p class="semantic-sample">Souvent couplé avec la méthodologie <i>Kanban</i>. Possibilité de forcer la relecture de code avant intégration via <i>pull request</i></p>
-                    <p class="semantic-sample">Travail supplémentaire à l'<i>intégration d'une feature</i>.</p>
-                </section>
-                <section>
-                        <canvas id="feature-branch-flow" style="background: white; height: 280px !important;" height="320"></canvas>
-                        <script>
-                            (function() {
-                            var template = getDefautTemplate();
-                            var gitGraph = new GitGraph({ template, orientation: "vertical-reverse", author: "Thibault Ingargiola", elementId: "feature-branch-flow" });
-
-                            var master = gitGraph.branch("master").commit({ message: "First commit", sha1: "6b2488" }).commit({sha1:"346791",message:"Create a new branch here"});
-                            var feat3 = master.branch("feature-3").commit();
-                            var feat1 = master.commit({sha1:"029bdd"}).branch("feature-1").commit().commit();
-                            var feat2 = master.commit().commit().branch("feature-2").commit().commit().commit();;
-                            feat2.merge(master);
-                            feat3.commit();
-                            master.commit();
-                            feat3.merge(master);
-                            feat1.merge(master);
-
-                        })();
                         </script>
+                    </section>
                 </section>
-                <section>
-                    <h1>Les étapes du feature-branching</h1>
-                    <ol>
-                        <li class="semantic-sample">Je crée une <i>branche</i> à partir de devs liés à une <i>issue/WI</i></li>
-                        <li class="semantic-sample">Je code sur ma branche (<i>commit et push régulier</i>)</li>
-                        <li class="semantic-sample">Je résous les conflits avec <i>dev</i> (<i>merge</i> ou <i>rebase</i>)</li>
-                        <li class="semantic-sample">Je crée la <i>pull request</i></li>
-                        <li class="semantic-sample"><i>Un relecteur valide</i> ma pull request ou me renvoie à l'étape 2</li>
-                    </ol>
+
+                <section
+                    style="font-size: 22px; color: white"
+                    data-transition="slide"
+                    data-background-transition="zoom"
+                >
+                    <section>
+                        <h1>Git au quotidien</h1>
+                    </section>
+                    <section>
+                        <h1>Les logiciels de dépôt</h1>
+                        <p class="semantic-sample">
+                            Ils permettent de gérer efficacement un dépôt. <i>Sécuriser</i> certaine branches, mettre en
+                            place des <i>builds automatiques</i>, des <i>workflows</i> particuliers...
+                        </p>
+                        <div style="display: flex; justify-content: space-around">
+                            <img
+                                src="images/gitlab-logo.svg"
+                                style="width: 300px; padding: 15px; background: white"
+                                alt=""
+                            />
+                            <img src="images/TFS-logo.png" style="padding: 15px; background: white" alt="" />
+                        </div>
+                    </section>
+                    <section>
+                        <h1>Les clients graphiques</h1>
+                        <p class="semantic-sample">
+                            Indispensable à une <i>utilisation</i> efficaces de Git. On evite les erreurs, on comprend
+                            et donc <i>maîtrise ce que l'on fait</i>.
+                        </p>
+                        <img
+                            src="images/TortoiseGit_logo.svg"
+                            style="width: 300px; padding: 15px; background: white"
+                            alt=""
+                        />
+                        <div><a href="https://tortoisegit.org/">Site web</a></div>
+                    </section>
                 </section>
-                <section>
-                    <h1>L'intérêt du rebase</h1>
-                        <canvas id="feature-branch-rebase-flow" style="background: white; height: 280px !important;" height="320"></canvas>
+                <section
+                    style="font-size: 22px; color: white"
+                    data-transition="slide"
+                    data-background="#4d7e65"
+                    data-background-transition="zoom"
+                >
+                    <section>
+                        <h1>Workflows</h1>
+                        <p class="semantic-sample">Pour une <i>organisation du travail</i> efficace et qualitative!</p>
+                    </section>
+                    <section>
+                        <h1>Workflow centralisé</h1>
+                        <p class="semantic-sample">
+                            <i>Flow mono-branche</i>. Seule la master est présente, chaque personne doit pusher des
+                            versions stables de l'application.
+                        </p>
+                        <p class="semantic-sample">
+                            Flow le plus utilisé à l'heure actuelle chez Klee. <i>Simple, léger, efficace</i>. Pas de
+                            garde fou ni de modularité.
+                        </p>
+
+                        <canvas
+                            id="central-flow"
+                            style="background: white; height: 280px !important"
+                            height="320"
+                        ></canvas>
                         <script>
-                            (function() {
-                            var template = getDefautTemplate();
-                            var gitGraph = new GitGraph({ template, orientation: "vertical-reverse", author: "Thibault Ingargiola", elementId: "feature-branch-rebase-flow" });
+                            (function () {
+                                var template = getDefautTemplate();
+                                template.commit.message.displayBranch = false;
+                                var gitGraph = new GitGraph({
+                                    template,
+                                    orientation: "horizontal",
+                                    author: "Michou Dupont",
+                                    elementId: "central-flow",
+                                });
 
-                            var master = gitGraph.branch("master").commit({ message: "First commit", sha1: "6b2488" }).commit({sha1:"346791",message:"Create a new branch here"});
-                            var feat1 = master.commit({sha1:"029bdd"}).branch("feature-1").commit().commit();
-                            feat1.merge(master);
-                            var feat2 = master.branch("feature-2").commit().commit().commit();;
-                            feat2.merge(master);
-                            var feat3 = master.branch("feature-3").commit();
-                            feat3.commit();
-                            feat3.merge(master);
-
-                        })();
+                                var master = gitGraph
+                                    .branch("master")
+                                    .commit({ message: "First commit", sha1: "6b2488" })
+                                    .commit({ message: "Second commit", sha1: "42eb2a" })
+                                    .commit({ sha1: "346791", message: "Create a new branch here" });
+                                master
+                                    .commit({ sha1: "029bdd", tag: "origin/master" })
+                                    .commit({ dotColor: "purple" })
+                                    .commit({ dotColor: "purple" })
+                                    .commit({ dotColor: "purple", tag: "local/master" });
+                            })();
                         </script>
+                    </section>
+                    <section>
+                        <h1>Les étapes de flow centralisé</h1>
+                        <ol>
+                            <li class="semantic-sample">Je code sur mon <i>dépôt local</i></li>
+                            <li class="semantic-sample">Je me synchronise avec <i>origin</i> (pull --rebase)</li>
+                            <li class="semantic-sample">Je <i>push</i></li>
+                        </ol>
+                    </section>
+                    <section>
+                        <h1>Feature branching</h1>
+                        <p class="semantic-sample">
+                            <i>Flow multi-branches</i>. Une branche principale servant à l'integration des
+                            fonctionnalités (souvent appelée <i>develop</i>). Puis
+                            <i>une branche par fonctionnalité</i> basée sur <i>develop</i>.
+                        </p>
+                        <p class="semantic-sample">
+                            L'idée de ce flow est de séparer les concepts métiers en <i>story</i> utilisateurs. Il
+                            permet une plus grande modularité et une meilleure maîtrise dans la façon de travailler.
+                        </p>
+                        <p class="semantic-sample">
+                            Souvent couplé avec la méthodologie <i>Kanban</i>. Possibilité de forcer la relecture de
+                            code avant intégration via <i>pull request</i>
+                        </p>
+                        <p class="semantic-sample">Travail supplémentaire à l'<i>intégration d'une feature</i>.</p>
+                    </section>
+                    <section>
+                        <canvas
+                            id="feature-branch-flow"
+                            style="background: white; height: 280px !important"
+                            height="320"
+                        ></canvas>
+                        <script>
+                            (function () {
+                                var template = getDefautTemplate();
+                                var gitGraph = new GitGraph({
+                                    template,
+                                    orientation: "vertical-reverse",
+                                    author: "Michou Dupont",
+                                    elementId: "feature-branch-flow",
+                                });
+
+                                var master = gitGraph
+                                    .branch("master")
+                                    .commit({ message: "First commit", sha1: "6b2488" })
+                                    .commit({ sha1: "346791", message: "Create a new branch here" });
+                                var feat3 = master.branch("feature-3").commit();
+                                var feat1 = master.commit({ sha1: "029bdd" }).branch("feature-1").commit().commit();
+                                var feat2 = master.commit().commit().branch("feature-2").commit().commit().commit();
+                                feat2.merge(master);
+                                feat3.commit();
+                                master.commit();
+                                feat3.merge(master);
+                                feat1.merge(master);
+                            })();
+                        </script>
+                    </section>
+                    <section>
+                        <h1>Les étapes du feature-branching</h1>
+                        <ol>
+                            <li class="semantic-sample">
+                                Je crée une <i>branche</i> à partir de devs liés à une <i>issue/WI</i>
+                            </li>
+                            <li class="semantic-sample">Je code sur ma branche (<i>commit et push régulier</i>)</li>
+                            <li class="semantic-sample">
+                                Je résous les conflits avec <i>dev</i> (<i>merge</i> ou <i>rebase</i>)
+                            </li>
+                            <li class="semantic-sample">Je crée la <i>pull request</i></li>
+                            <li class="semantic-sample">
+                                <i>Un relecteur valide</i> ma pull request ou me renvoie à l'étape 2
+                            </li>
+                        </ol>
+                    </section>
+                    <section>
+                        <h1>L'intérêt du rebase</h1>
+                        <canvas
+                            id="feature-branch-rebase-flow"
+                            style="background: white; height: 280px !important"
+                            height="320"
+                        ></canvas>
+                        <script>
+                            (function () {
+                                var template = getDefautTemplate();
+                                var gitGraph = new GitGraph({
+                                    template,
+                                    orientation: "vertical-reverse",
+                                    author: "Michou Dupont",
+                                    elementId: "feature-branch-rebase-flow",
+                                });
+
+                                var master = gitGraph
+                                    .branch("master")
+                                    .commit({ message: "First commit", sha1: "6b2488" })
+                                    .commit({ sha1: "346791", message: "Create a new branch here" });
+                                var feat1 = master.commit({ sha1: "029bdd" }).branch("feature-1").commit().commit();
+                                feat1.merge(master);
+                                var feat2 = master.branch("feature-2").commit().commit().commit();
+                                feat2.merge(master);
+                                var feat3 = master.branch("feature-3").commit();
+                                feat3.commit();
+                                feat3.merge(master);
+                            })();
+                        </script>
+                    </section>
                 </section>
-            </section>
-            <section style="font-size: 22px; color:white" data-transition="slide" data-background-transition="zoom">
-                <section>
-                    <h1>Exercices</h1>
-                    <p class="semantic-sample"><a href="https://github.com/SalomonBrys/Git-Exercices" target="_blank" >Prise en main</a></p>
-					<p class="semantic-sample"><a href="https://learngitbranching.js.org/" target="_blank" >Branching</a></p>
+                <section
+                    style="font-size: 22px; color: white"
+                    data-transition="slide"
+                    data-background-transition="zoom"
+                >
+                    <section>
+                        <h1>Exercices</h1>
+                        <p class="semantic-sample">
+                            <a href="https://github.com/SalomonBrys/Git-Exercices" target="_blank">Prise en main</a>
+                        </p>
+                        <p class="semantic-sample">
+                            <a href="https://learngitbranching.js.org/" target="_blank">Branching</a>
+                        </p>
+                    </section>
                 </section>
-            </section>
+            </div>
         </div>
-    </div>
 
-    <script src="lib/js/head.min.js"></script>
-    <script src="js/reveal.js"></script>
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
 
-    <script>
+        <script>
+            // Full list of configuration options available at:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
 
-        // Full list of configuration options available at:
-        // https://github.com/hakimel/reveal.js#configuration
-        Reveal.initialize({
-            controls: true,
-            progress: true,
-            history: true,
-            center: true,
+                transition: "slide", // none/fade/slide/convex/concave/zoom
 
-            transition: 'slide', // none/fade/slide/convex/concave/zoom
-
-            // Optional reveal.js plugins
-            dependencies: [
-                { src: 'lib/js/classList.js', condition: function () { return !document.body.classList; } },
-                { src: 'plugin/markdown/marked.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
-                { src: 'plugin/markdown/markdown.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
-                { src: 'plugin/highlight/highlight.js', async: true, condition: function () { return !!document.querySelector('pre code'); }, callback: function () { hljs.initHighlightingOnLoad(); } },
-                { src: 'plugin/zoom-js/zoom.js', async: true },
-                { src: 'plugin/notes/notes.js', async: true }
-            ]
-        });
-
-    </script>
-
-</body>
-
+                // Optional reveal.js plugins
+                dependencies: [
+                    {
+                        src: "lib/js/classList.js",
+                        condition: function () {
+                            return !document.body.classList;
+                        },
+                    },
+                    {
+                        src: "plugin/markdown/marked.js",
+                        condition: function () {
+                            return !!document.querySelector("[data-markdown]");
+                        },
+                    },
+                    {
+                        src: "plugin/markdown/markdown.js",
+                        condition: function () {
+                            return !!document.querySelector("[data-markdown]");
+                        },
+                    },
+                    {
+                        src: "plugin/highlight/highlight.js",
+                        async: true,
+                        condition: function () {
+                            return !!document.querySelector("pre code");
+                        },
+                        callback: function () {
+                            hljs.initHighlightingOnLoad();
+                        },
+                    },
+                    { src: "plugin/zoom-js/zoom.js", async: true },
+                    { src: "plugin/notes/notes.js", async: true },
+                ],
+            });
+        </script>
+    </body>
 </html>
